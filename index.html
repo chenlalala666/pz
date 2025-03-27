@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>陪诊APP - 页面展示</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>陪诊APP原型</title>
     <style>
         * {
             margin: 0;
@@ -13,353 +12,303 @@
         }
         
         body {
-            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
-            background-color: #F5F5F5;
-            color: #333;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 40px;
+            background-color: #f5f5f7;
         }
         
-        .page-container {
-            max-width: 1600px;
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin: 30px 0 15px;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        .prototype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #EEEEEE;
-        }
-        
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #4A90E2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-        }
-        
-        .description {
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .section {
-            margin-bottom: 50px;
-        }
-        
-        .section-title {
-            font-size: 22px;
-            color: #333;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #EEEEEE;
-        }
-        
-        .pages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .page-item {
+        .prototype-item {
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .page-item:hover {
+        .prototype-item:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
         
-        .page-header {
+        .prototype-header {
             padding: 15px;
-            background-color: #4A90E2;
-            color: white;
-            font-weight: 600;
+            border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .page-title {
+        .prototype-title {
             font-size: 16px;
+            font-weight: 600;
+            color: #333;
         }
         
-        .page-icon {
-            width: 24px;
-            height: 24px;
-            text-align: center;
+        .prototype-tag {
+            background-color: #e8f5ff;
+            color: #0077ff;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
         }
         
-        .iframe-container {
-            width: 320px;
+        .prototype-frame {
             height: 600px;
-            margin: 20px auto;
-            border: 8px solid #333;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        
-        iframe {
             width: 100%;
-            height: 100%;
             border: none;
         }
+
+        .category-section {
+            margin: 30px 0;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: #666;
+            line-height: 1.6;
+        }
         
-        @media (max-width: 768px) {
-            .pages-grid {
-                grid-template-columns: 1fr;
-            }
+        .text-primary {
+            color: #4A90E2;
+        }
+        
+        .tag-order {
+            background-color: #ffece8;
+            color: #ff5252;
+        }
+        
+        .tag-community {
+            background-color: #e6f7ee;
+            color: #10b981;
+        }
+        
+        .tag-profile {
+            background-color: #fff6e5;
+            color: #f59e0b;
+        }
+        
+        .tag-service {
+            background-color: #e8f5ff;
+            color: #0077ff;
         }
     </style>
 </head>
 <body>
-    <div class="page-container">
-        <div class="header">
-            <div class="logo">
-                <i class="fas fa-hospital-user"></i>
-                <span>陪诊APP页面展示</span>
+    <h1>智慧陪诊APP高保真原型</h1>
+    
+    <div class="intro">
+        <p>这是一款专为医疗陪诊服务设计的移动应用高保真原型，提供全程陪诊、院内陪诊、代办问诊和代办买药服务。以下展示了所有页面，包括主页面和各功能二级页面，模拟iPhone 15 Pro尺寸（393×852像素）。</p>
+    </div>
+    
+    <!-- 主页面展示 -->
+    <h2>主页面</h2>
+    <div class="prototype-grid">
+        <div class="prototype-item">
+            <div class="prototype-header">
+                <div class="prototype-title">首页</div>
+                <div class="prototype-tag">主页面</div>
             </div>
-            <div class="description">所有页面平铺展示，方便整体预览和设计参考</div>
+            <iframe src="pages/home.html" class="prototype-frame"></iframe>
         </div>
         
-        <!-- 主页面部分 -->
-        <div class="section">
-            <h2 class="section-title">主页面</h2>
-            <div class="pages-grid">
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">首页</div>
-                        <div class="page-icon"><i class="fas fa-home"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/home.html"></iframe>
-                    </div>
-                </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">订单</div>
-                        <div class="page-icon"><i class="fas fa-list-alt"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/orders.html"></iframe>
-                    </div>
-                </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">社区</div>
-                        <div class="page-icon"><i class="fas fa-comments"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/community.html"></iframe>
-                    </div>
-                </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">我的</div>
-                        <div class="page-icon"><i class="fas fa-user"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/profile.html"></iframe>
-                    </div>
-                </div>
+        <div class="prototype-item">
+            <div class="prototype-header">
+                <div class="prototype-title">订单页</div>
+                <div class="prototype-tag">主页面</div>
             </div>
+            <iframe src="pages/orders.html" class="prototype-frame"></iframe>
         </div>
         
-        <!-- 订单相关页面 -->
-        <div class="section">
-            <h2 class="section-title">订单相关页面</h2>
-            <div class="pages-grid">
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">订单详情</div>
-                        <div class="page-icon"><i class="fas fa-file-alt"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/order-detail.html"></iframe>
-                    </div>
-                </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">订单支付</div>
-                        <div class="page-icon"><i class="fas fa-credit-card"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/order-payment.html"></iframe>
-                    </div>
-                </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">服务评价</div>
-                        <div class="page-icon"><i class="fas fa-star"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/order-review.html"></iframe>
-                    </div>
-                </div>
+        <div class="prototype-item">
+            <div class="prototype-header">
+                <div class="prototype-title">社区页</div>
+                <div class="prototype-tag">主页面</div>
             </div>
+            <iframe src="pages/community.html" class="prototype-frame"></iframe>
         </div>
         
-        <!-- 社区相关页面 -->
-        <div class="section">
-            <h2 class="section-title">社区相关页面</h2>
-            <div class="pages-grid">
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">帖子详情</div>
-                        <div class="page-icon"><i class="fas fa-file-alt"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/community-post-detail.html"></iframe>
-                    </div>
+        <div class="prototype-item">
+            <div class="prototype-header">
+                <div class="prototype-title">个人中心</div>
+                <div class="prototype-tag">主页面</div>
+            </div>
+            <iframe src="pages/profile.html" class="prototype-frame"></iframe>
+        </div>
+    </div>
+    
+    <!-- 服务类别二级页面 -->
+    <div class="category-section">
+        <h2>服务类别</h2>
+        <div class="prototype-grid">
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">全程陪诊</div>
+                    <div class="prototype-tag tag-service">服务页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">发布帖子</div>
-                        <div class="page-icon"><i class="fas fa-edit"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/community-post-create.html"></iframe>
-                    </div>
+                <iframe src="pages/sub/escort-full.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">院内陪诊</div>
+                    <div class="prototype-tag tag-service">服务页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">话题详情</div>
-                        <div class="page-icon"><i class="fas fa-hashtag"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/community-topic-detail.html"></iframe>
-                    </div>
+                <iframe src="pages/sub/escort-in-hospital.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">代办问诊</div>
+                    <div class="prototype-tag tag-service">服务页面</div>
                 </div>
+                <iframe src="pages/sub/inquiry-assistance.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">代办买药</div>
+                    <div class="prototype-tag tag-service">服务页面</div>
+                </div>
+                <iframe src="pages/sub/medicine-delivery.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">快速预约</div>
+                    <div class="prototype-tag tag-service">服务页面</div>
+                </div>
+                <iframe src="pages/sub/quick-booking.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">推荐服务</div>
+                    <div class="prototype-tag tag-service">服务页面</div>
+                </div>
+                <iframe src="pages/sub/recommended-services.html" class="prototype-frame"></iframe>
             </div>
         </div>
-        
-        <!-- 个人中心页面 -->
-        <div class="section">
-            <h2 class="section-title">个人中心页面</h2>
-            <div class="pages-grid">
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">编辑个人资料</div>
-                        <div class="page-icon"><i class="fas fa-user-edit"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/profile-edit.html"></iframe>
-                    </div>
+    </div>
+    
+    <!-- 订单相关二级页面 -->
+    <div class="category-section">
+        <h2>订单相关页面</h2>
+        <div class="prototype-grid">
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">订单详情</div>
+                    <div class="prototype-tag tag-order">订单页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">健康档案</div>
-                        <div class="page-icon"><i class="fas fa-heartbeat"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/profile-health-records.html"></iframe>
-                    </div>
+                <iframe src="pages/sub/order-detail.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">订单支付</div>
+                    <div class="prototype-tag tag-order">订单页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">我的钱包</div>
-                        <div class="page-icon"><i class="fas fa-wallet"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/profile-wallet.html"></iframe>
-                    </div>
+                <iframe src="pages/sub/order-payment.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">服务评价</div>
+                    <div class="prototype-tag tag-order">订单页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">我的收藏</div>
-                        <div class="page-icon"><i class="fas fa-heart"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/profile-favorites.html"></iframe>
-                    </div>
-                </div>
+                <iframe src="pages/sub/order-review.html" class="prototype-frame"></iframe>
             </div>
         </div>
-        
-        <!-- 服务类页面 -->
-        <div class="section">
-            <h2 class="section-title">服务类页面</h2>
-            <div class="pages-grid">
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">推荐服务</div>
-                        <div class="page-icon"><i class="fas fa-thumbs-up"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/recommended-services.html"></iframe>
-                    </div>
+    </div>
+    
+    <!-- 社区相关二级页面 -->
+    <div class="category-section">
+        <h2>社区相关页面</h2>
+        <div class="prototype-grid">
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">帖子详情</div>
+                    <div class="prototype-tag tag-community">社区页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">快速预约</div>
-                        <div class="page-icon"><i class="fas fa-calendar-check"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/quick-booking.html"></iframe>
-                    </div>
+                <iframe src="pages/sub/community-post-detail.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">发布帖子</div>
+                    <div class="prototype-tag tag-community">社区页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">送药上门</div>
-                        <div class="page-icon"><i class="fas fa-pills"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/medicine-delivery.html"></iframe>
-                    </div>
+                <iframe src="pages/sub/community-post-create.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">话题详情</div>
+                    <div class="prototype-tag tag-community">社区页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">问诊协助</div>
-                        <div class="page-icon"><i class="fas fa-question-circle"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/inquiry-assistance.html"></iframe>
-                    </div>
+                <iframe src="pages/sub/community-topic-detail.html" class="prototype-frame"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 个人中心相关二级页面 -->
+    <div class="category-section">
+        <h2>个人中心相关页面</h2>
+        <div class="prototype-grid">
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">编辑个人资料</div>
+                    <div class="prototype-tag tag-profile">个人页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">院内陪诊</div>
-                        <div class="page-icon"><i class="fas fa-hospital"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/escort-in-hospital.html"></iframe>
-                    </div>
+                <iframe src="pages/sub/profile-edit.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">健康档案</div>
+                    <div class="prototype-tag tag-profile">个人页面</div>
                 </div>
-                
-                <div class="page-item">
-                    <div class="page-header">
-                        <div class="page-title">全程陪诊</div>
-                        <div class="page-icon"><i class="fas fa-user-nurse"></i></div>
-                    </div>
-                    <div class="iframe-container">
-                        <iframe src="pages/sub/escort-full.html"></iframe>
-                    </div>
+                <iframe src="pages/sub/profile-health-records.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">我的钱包</div>
+                    <div class="prototype-tag tag-profile">个人页面</div>
                 </div>
+                <iframe src="pages/sub/profile-wallet.html" class="prototype-frame"></iframe>
+            </div>
+            
+            <div class="prototype-item">
+                <div class="prototype-header">
+                    <div class="prototype-title">我的收藏</div>
+                    <div class="prototype-tag tag-profile">个人页面</div>
+                </div>
+                <iframe src="pages/sub/profile-favorites.html" class="prototype-frame"></iframe>
             </div>
         </div>
     </div>

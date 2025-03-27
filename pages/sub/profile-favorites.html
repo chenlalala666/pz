@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的收藏 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #4A90E2;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .edit-button {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .tab-navbar {
+            display: flex;
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 10px;
+            font-size: 15px;
+            color: #666;
+            position: relative;
+        }
+        
+        .tab-item.active {
+            color: #4A90E2;
+            font-weight: 600;
+        }
+        
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background-color: #4A90E2;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .post-card {
+            background-color: white;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .post-header {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+        
+        .post-info {
+            flex: 1;
+        }
+        
+        .post-author {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-time {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 10px;
+            border-radius: 3px;
+            margin-left: 6px;
+            font-weight: normal;
+        }
+        
+        .expert-badge {
+            background-color: #FFE9E9;
+            color: #FF4D4F;
+        }
+        
+        .post-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .post-content {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .post-image-container {
+            margin-bottom: 12px;
+        }
+        
+        .post-image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+        }
+        
+        .post-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .post-image-single {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 13px;
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-action i {
+            margin-right: 4px;
+        }
+        
+        .doctor-card {
+            background-color: white;
+            margin-bottom: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .doctor-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .doctor-info {
+            flex: 1;
+        }
+        
+        .doctor-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .doctor-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 6px;
+        }
+        
+        .doctor-hospital {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .doctor-tags {
+            display: flex;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .doctor-tag {
+            background-color: #F5F5F5;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #666;
+            margin-right: 6px;
+            margin-bottom: 5px;
+        }
+        
+        .doctor-contact {
+            padding: 6px 15px;
+            background-color: #F0F7FF;
+            color: #4A90E2;
+            border-radius: 18px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        
+        .service-card {
+            background-color: white;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .service-header {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        
+        .service-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background-color: #EBF5FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4A90E2;
+            font-size: 22px;
+            margin-right: 12px;
+        }
+        
+        .service-info {
+            flex: 1;
+        }
+        
+        .service-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .service-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .price-tag {
+            background-color: #F0F7FF;
+            color: #4A90E2;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        .service-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+        
+        .service-meta {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .service-button {
+            background-color: #4A90E2;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 13px;
+        }
+        
+        .favorites-empty {
+            padding: 60px 30px;
+            text-align: center;
+            color: #999;
+        }
+        
+        .empty-icon {
+            font-size: 60px;
+            color: #DDD;
+            margin-bottom: 20px;
+        }
+        
+        .empty-text {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .empty-button {
+            display: inline-block;
+            background-color: #4A90E2;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .edit-mode-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #F0F0F0;
+            z-index: 100;
+        }
+        
+        .select-all-button, .cancel-button {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #F5F5F5;
+            color: #666;
+        }
+        
+        .delete-button {
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #FF5252;
+            color: white;
+        }
+        
+        .select-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            border: 1px solid #DDD;
+            margin-right: 10px;
+            position: relative;
+        }
+        
+        .selected .select-checkbox {
+            background-color: #4A90E2;
+            border-color: #4A90E2;
+        }
+        
+        .selected .select-checkbox::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../profile.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">我的收藏</h1>
+                <a href="#" class="edit-button">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </div>
+            
+            <!-- 标签导航 -->
+            <div class="tab-navbar">
+                <div class="tab-item active">文章</div>
+                <div class="tab-item">医生</div>
+                <div class="tab-item">服务</div>
+            </div>
+            
+            <!-- 收藏文章列表 -->
+            <div class="post-card">
+                <div class="post-header">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="post-avatar" alt="作者头像">
+                    <div class="post-info">
+                        <div class="post-author">
+                            张志强 主任医师
+                            <span class="badge expert-badge">专家</span>
+                        </div>
+                        <div class="post-time">3天前 · 收藏于今天</div>
+                    </div>
+                </div>
+                
+                <div class="post-title">高血压患者的日常饮食注意事项</div>
+                
+                <div class="post-content">
+                    高血压是一种常见的慢性疾病，合理的饮食对控制血压有着重要的作用。作为长期从事心血管疾病临床工作的医生，我想与大家分享一些高血压患者日常饮食的注意事项...
+                </div>
+                
+                <div class="post-image-container">
+                    <div class="post-image-grid">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="健康饮食">
+                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="血压计">
+                        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="健康食品">
+                    </div>
+                </div>
+                
+                <div class="post-actions">
+                    <div class="post-action">
+                        <i class="fas fa-heart"></i>
+                        <span>238</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-comment"></i>
+                        <span>46</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share-alt"></i>
+                        <span>分享</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-card">
+                <div class="post-header">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" class="post-avatar" alt="作者头像">
+                    <div class="post-info">
+                        <div class="post-author">
+                            王医生
+                            <span class="badge expert-badge">专家</span>
+                        </div>
+                        <div class="post-time">5天前 · 收藏于昨天</div>
+                    </div>
+                </div>
+                
+                <div class="post-title">三高人群的日常饮食指南：这些食物要少吃！</div>
+                
+                <div class="post-content">
+                    随着生活水平提高，"三高"(高血压、高血糖、高血脂)已成为常见健康问题。科学饮食是控制"三高"的关键。以下食物建议少吃...
+                </div>
+                
+                <div class="post-image-container">
+                    <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="post-image-single" alt="健康食品">
+                </div>
+                
+                <div class="post-actions">
+                    <div class="post-action">
+                        <i class="fas fa-heart"></i>
+                        <span>1,432</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-comment"></i>
+                        <span>237</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share-alt"></i>
+                        <span>分享</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-card">
+                <div class="post-header">
+                    <img src="https://randomuser.me/api/portraits/men/86.jpg" class="post-avatar" alt="作者头像">
+                    <div class="post-info">
+                        <div class="post-author">
+                            李营养师
+                            <span class="badge expert-badge">专家</span>
+                        </div>
+                        <div class="post-time">1周前 · 收藏于3天前</div>
+                    </div>
+                </div>
+                
+                <div class="post-title">老年人营养均衡的一日三餐搭配推荐</div>
+                
+                <div class="post-content">
+                    老年人由于生理特点，饮食需要更注重营养均衡和消化吸收。今天分享适合老年人的一日三餐安排：早餐：杂粮粥+鸡蛋+青菜...
+                </div>
+                
+                <div class="post-actions">
+                    <div class="post-action">
+                        <i class="fas fa-heart"></i>
+                        <span>875</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-comment"></i>
+                        <span>146</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share-alt"></i>
+                        <span>分享</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 收藏医生列表 (默认隐藏) -->
+            <div style="display: none;">
+                <div class="doctor-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="doctor-avatar" alt="医生头像">
+                    <div class="doctor-info">
+                        <div class="doctor-name">
+                            张志强 
+                            <span class="badge expert-badge">主任医师</span>
+                        </div>
+                        <div class="doctor-title">心血管内科</div>
+                        <div class="doctor-hospital">北京协和医院</div>
+                        <div class="doctor-tags">
+                            <span class="doctor-tag">高血压</span>
+                            <span class="doctor-tag">冠心病</span>
+                            <span class="doctor-tag">心力衰竭</span>
+                        </div>
+                    </div>
+                    <div class="doctor-contact">
+                        <i class="fas fa-phone-alt"></i> 问诊
+                    </div>
+                </div>
+                
+                <div class="doctor-card">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" class="doctor-avatar" alt="医生头像">
+                    <div class="doctor-info">
+                        <div class="doctor-name">
+                            王丽娜 
+                            <span class="badge expert-badge">副主任医师</span>
+                        </div>
+                        <div class="doctor-title">内分泌科</div>
+                        <div class="doctor-hospital">北京大学第三医院</div>
+                        <div class="doctor-tags">
+                            <span class="doctor-tag">糖尿病</span>
+                            <span class="doctor-tag">甲状腺疾病</span>
+                        </div>
+                    </div>
+                    <div class="doctor-contact">
+                        <i class="fas fa-phone-alt"></i> 问诊
+                    </div>
+                </div>
+                
+                <div class="doctor-card">
+                    <img src="https://randomuser.me/api/portraits/men/86.jpg" class="doctor-avatar" alt="医生头像">
+                    <div class="doctor-info">
+                        <div class="doctor-name">
+                            李明 
+                            <span class="badge expert-badge">住院医师</span>
+                        </div>
+                        <div class="doctor-title">骨科</div>
+                        <div class="doctor-hospital">首都医科大学附属北京朝阳医院</div>
+                        <div class="doctor-tags">
+                            <span class="doctor-tag">骨折</span>
+                            <span class="doctor-tag">关节炎</span>
+                            <span class="doctor-tag">腰椎间盘突出</span>
+                        </div>
+                    </div>
+                    <div class="doctor-contact">
+                        <i class="fas fa-phone-alt"></i> 问诊
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 收藏服务列表 (默认隐藏) -->
+            <div style="display: none;">
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-hospital-user"></i>
+                        </div>
+                        <div class="service-info">
+                            <div class="service-title">三甲医院专家陪诊</div>
+                            <div class="service-desc">提供专业医疗陪护，包括挂号、排队、就诊、检查、取药等全流程服务，确保就医体验舒适高效。</div>
+                        </div>
+                    </div>
+                    <div class="service-footer">
+                        <div class="price-tag">¥398起</div>
+                        <div class="service-meta">已有1283人购买</div>
+                        <div class="service-button">立即预约</div>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <div class="service-info">
+                            <div class="service-title">名医电话咨询</div>
+                            <div class="service-desc">与三甲医院专家进行一对一电话咨询，解答健康问题，提供用药指导和治疗建议。</div>
+                        </div>
+                    </div>
+                    <div class="service-footer">
+                        <div class="price-tag">¥198起/次</div>
+                        <div class="service-meta">已有856人购买</div>
+                        <div class="service-button">立即预约</div>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div class="service-info">
+                            <div class="service-title">慢病药品配送</div>
+                            <div class="service-desc">为慢性病患者提供长期用药配送服务，足不出户轻松购药，包含血压、血糖、心脑血管等常见慢病药品。</div>
+                        </div>
+                    </div>
+                    <div class="service-footer">
+                        <div class="price-tag">¥10起/次</div>
+                        <div class="service-meta">已有2156人购买</div>
+                        <div class="service-button">立即预约</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 空内容状态 (默认隐藏) -->
+            <div class="favorites-empty" style="display: none;">
+                <div class="empty-icon">
+                    <i class="far fa-heart"></i>
+                </div>
+                <div class="empty-text">暂无收藏内容</div>
+                <div class="empty-button">去浏览内容</div>
+            </div>
+            
+            <!-- 编辑模式底栏 (默认隐藏) -->
+            <div class="edit-mode-bar" style="display: none;">
+                <div class="select-all-button">全选</div>
+                <div class="delete-button">删除</div>
+                <div class="cancel-button">取消</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

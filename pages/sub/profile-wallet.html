@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的钱包 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #4A90E2;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .settings-button {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .wallet-summary {
+            background-color: #4A90E2;
+            padding: 20px 15px 30px;
+            color: white;
+        }
+        
+        .balance-label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .balance-amount {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .wallet-actions {
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .wallet-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .action-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        
+        .action-label {
+            font-size: 13px;
+        }
+        
+        .section-header {
+            background-color: white;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .transaction-list {
+            background-color: white;
+        }
+        
+        .transaction-item {
+            padding: 15px;
+            display: flex;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #F5F5F5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            color: #4A90E2;
+            font-size: 18px;
+        }
+        
+        .transaction-info {
+            flex: 1;
+        }
+        
+        .transaction-title {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .transaction-time {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .amount-positive {
+            color: #FF5252;
+        }
+        
+        .amount-negative {
+            color: #4CAF50;
+        }
+        
+        .tab-navbar {
+            display: flex;
+            background-color: white;
+            margin-bottom: 1px;
+        }
+        
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 10px;
+            font-size: 15px;
+            color: #666;
+            position: relative;
+        }
+        
+        .tab-item.active {
+            color: #4A90E2;
+            font-weight: 600;
+        }
+        
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background-color: #4A90E2;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .month-selector {
+            padding: 10px 15px;
+            background-color: #F8F8F8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .month-label {
+            font-weight: 600;
+        }
+        
+        .month-arrows {
+            display: flex;
+            align-items: center;
+        }
+        
+        .month-arrow {
+            padding: 0 10px;
+        }
+        
+        .bill-summary {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .bill-summary-item {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .bill-summary-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .bill-summary-value {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .bill-value-in {
+            color: #FF5252;
+        }
+        
+        .bill-value-out {
+            color: #4CAF50;
+        }
+        
+        .card-section {
+            background-color: white;
+            margin: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .linked-cards {
+            padding: 5px 15px;
+        }
+        
+        .card-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .card-item:last-child {
+            border-bottom: none;
+        }
+        
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .bank-icon {
+            background-color: #FF9500;
+            color: white;
+        }
+        
+        .alipay-icon {
+            background-color: #1677FF;
+            color: white;
+        }
+        
+        .wechat-icon {
+            background-color: #07C160;
+            color: white;
+        }
+        
+        .add-icon {
+            background-color: #F5F5F5;
+            color: #999;
+        }
+        
+        .card-info {
+            flex: 1;
+        }
+        
+        .card-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .card-number {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .card-arrow {
+            color: #C8C8C8;
+        }
+        
+        .empty-state {
+            padding: 60px 0;
+            text-align: center;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../profile.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">我的钱包</h1>
+                <a href="#" class="settings-button">
+                    <i class="fas fa-ellipsis-h"></i>
+                </a>
+            </div>
+            
+            <!-- 钱包余额概览 -->
+            <div class="wallet-summary">
+                <div class="balance-label">钱包余额 (元)</div>
+                <div class="balance-amount">598.50</div>
+                <div class="wallet-actions">
+                    <a href="#" class="wallet-action">
+                        <div class="action-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="action-label">充值</div>
+                    </a>
+                    <a href="#" class="wallet-action">
+                        <div class="action-icon">
+                            <i class="fas fa-minus"></i>
+                        </div>
+                        <div class="action-label">提现</div>
+                    </a>
+                    <a href="#" class="wallet-action">
+                        <div class="action-icon">
+                            <i class="fas fa-yen-sign"></i>
+                        </div>
+                        <div class="action-label">优惠券</div>
+                    </a>
+                    <a href="#" class="wallet-action">
+                        <div class="action-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="action-label">福利中心</div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 支付方式 -->
+            <div class="card-section">
+                <div class="section-header">支付方式</div>
+                <div class="linked-cards">
+                    <div class="card-item">
+                        <div class="card-icon wechat-icon">
+                            <i class="fab fa-weixin"></i>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name">微信支付</div>
+                            <div class="card-number">微信账号: wxid_****89</div>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="card-item">
+                        <div class="card-icon alipay-icon">
+                            <i class="fab fa-alipay"></i>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name">支付宝</div>
+                            <div class="card-number">账号: 138****1234</div>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="card-item">
+                        <div class="card-icon bank-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name">中国建设银行</div>
+                            <div class="card-number">尾号5678储蓄卡</div>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="card-item">
+                        <div class="card-icon add-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name">添加支付方式</div>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 标签导航 -->
+            <div class="tab-navbar">
+                <div class="tab-item active">全部记录</div>
+                <div class="tab-item">收入</div>
+                <div class="tab-item">支出</div>
+                <div class="tab-item">退款</div>
+            </div>
+            
+            <!-- 月份选择器 -->
+            <div class="month-selector">
+                <div class="month-label">2023年9月</div>
+                <div class="month-arrows">
+                    <div class="month-arrow">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="month-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 账单概览 -->
+            <div class="bill-summary">
+                <div class="bill-summary-item">
+                    <div class="bill-summary-label">当月收入</div>
+                    <div class="bill-summary-value bill-value-in">+220.00</div>
+                </div>
+                <div class="bill-summary-item">
+                    <div class="bill-summary-label">当月支出</div>
+                    <div class="bill-summary-value bill-value-out">-468.00</div>
+                </div>
+            </div>
+            
+            <!-- 交易记录列表 -->
+            <div class="section-header">交易记录</div>
+            <div class="transaction-list">
+                <div class="transaction-item">
+                    <div class="transaction-icon">
+                        <i class="fas fa-hospital-user"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">支付陪诊服务费</div>
+                        <div class="transaction-time">今天 10:35</div>
+                    </div>
+                    <div class="transaction-amount amount-negative">-328.00</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">新用户注册奖励</div>
+                        <div class="transaction-time">09-12 14:20</div>
+                    </div>
+                    <div class="transaction-amount amount-positive">+100.00</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">代购药品费用</div>
+                        <div class="transaction-time">09-10 16:45</div>
+                    </div>
+                    <div class="transaction-amount amount-negative">-140.00</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon">
+                        <i class="fas fa-yen-sign"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">钱包充值</div>
+                        <div class="transaction-time">09-05 09:28</div>
+                    </div>
+                    <div class="transaction-amount amount-positive">+500.00</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">健康商城购物</div>
+                        <div class="transaction-time">09-01 13:15</div>
+                    </div>
+                    <div class="transaction-amount amount-negative">-120.00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

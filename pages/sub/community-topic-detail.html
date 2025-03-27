@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>话题详情 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #4A90E2;
+            color: white;
+            text-align: center;
+            position: relative;
+            padding: 16px;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .action-button {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .topic-container {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 12px;
+        }
+        
+        .topic-banner {
+            height: 160px;
+            background-image: linear-gradient(to right, #4A90E2, #6AB2FF);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+            color: white;
+        }
+        
+        .topic-info {
+            z-index: 2;
+            width: 100%;
+        }
+        
+        .topic-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.5) 100%);
+            z-index: 1;
+        }
+        
+        .topic-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .topic-stats {
+            display: flex;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .topic-stat {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic-stat i {
+            margin-right: 4px;
+        }
+        
+        .topic-desc {
+            padding: 15px;
+            color: #333;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+        
+        .action-bar {
+            display: flex;
+            border-top: 1px solid #F0F0F0;
+            padding: 12px 15px;
+        }
+        
+        .action-item {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .action-item i {
+            margin-right: 5px;
+            font-size: 16px;
+        }
+        
+        .action-item.primary {
+            color: #4A90E2;
+        }
+        
+        .section-header {
+            padding: 15px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            margin-top: 10px;
+            margin-bottom: 1px;
+        }
+        
+        .section-more {
+            font-size: 14px;
+            color: #999;
+            font-weight: 400;
+        }
+        
+        .post-card {
+            background-color: white;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 10px;
+        }
+        
+        .post-header {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .post-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-color: #F0F0F0;
+            overflow: hidden;
+        }
+        
+        .post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .post-info {
+            flex: 1;
+        }
+        
+        .post-author {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .verified-badge {
+            color: #4A90E2;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        
+        .post-meta {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .post-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .post-content {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        
+        .post-images {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .post-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            background-color: #F0F0F0;
+            overflow: hidden;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .post-image.single {
+            grid-column: span 3;
+            aspect-ratio: 16/9;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        
+        .post-tag {
+            padding: 4px 10px;
+            background-color: #F5F5F5;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #666;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .post-actions {
+            display: flex;
+            padding-top: 10px;
+            border-top: 1px solid #F0F0F0;
+        }
+        
+        .post-action {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .post-action i {
+            margin-right: 5px;
+            font-size: 15px;
+        }
+        
+        .expert-tag {
+            display: inline-block;
+            padding: 2px 6px;
+            background-color: #FFE9E9;
+            color: #FF4D4F;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
+            font-weight: 400;
+        }
+        
+        .pinned-tag {
+            display: inline-block;
+            padding: 2px 6px;
+            background-color: #E7F5FF;
+            color: #4A90E2;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
+            font-weight: 400;
+        }
+        
+        .floating-button {
+            position: fixed;
+            bottom: 80px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: #4A90E2;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            font-size: 20px;
+        }
+        
+        .member-section {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .member-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .member-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .member-more {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+        
+        .member-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .member-avatar {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background-color: #F0F0F0;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .member-name {
+            font-size: 12px;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .post-filter {
+            display: flex;
+            background-color: white;
+            overflow-x: auto;
+            scrollbar-width: none;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .post-filter::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .filter-option {
+            padding: 12px 20px;
+            font-size: 15px;
+            color: #666;
+            white-space: nowrap;
+        }
+        
+        .filter-option.active {
+            color: #4A90E2;
+            position: relative;
+            font-weight: 600;
+        }
+        
+        .filter-option.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background-color: #4A90E2;
+            border-radius: 3px 3px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../community.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">话题详情</h1>
+                <div class="action-button">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+            </div>
+            
+            <!-- 话题信息区域 -->
+            <div class="topic-container">
+                <div class="topic-banner" style="background-image: url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');">
+                    <div class="topic-info">
+                        <div class="topic-title">健康饮食</div>
+                        <div class="topic-stats">
+                            <div class="topic-stat">
+                                <i class="fas fa-user"></i> 1.2万人关注
+                            </div>
+                            <div class="topic-stat">
+                                <i class="fas fa-comment"></i> 3,458篇内容
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="topic-desc">
+                    健康饮食话题汇集了营养学专家和用户的知识分享，包括平衡饮食建议、特殊人群饮食指导、食谱推荐等内容，帮助用户建立健康的饮食习惯，预防和管理慢性疾病。
+                </div>
+                
+                <div class="action-bar">
+                    <div class="action-item primary">
+                        <i class="fas fa-plus"></i> 关注
+                    </div>
+                    <div class="action-item">
+                        <i class="fas fa-bell"></i> 消息提醒
+                    </div>
+                    <div class="action-item">
+                        <i class="fas fa-edit"></i> 发布
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 话题成员展示 -->
+            <div class="member-section">
+                <div class="member-header">
+                    <div class="member-title">话题成员 · 6位专家</div>
+                    <div class="member-more">查看全部 <i class="fas fa-chevron-right"></i></div>
+                </div>
+                <div class="member-grid">
+                    <div class="member-item">
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="成员头像">
+                        </div>
+                        <div class="member-name">张教授</div>
+                    </div>
+                    <div class="member-item">
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="成员头像">
+                        </div>
+                        <div class="member-name">王医生</div>
+                    </div>
+                    <div class="member-item">
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/86.jpg" alt="成员头像">
+                        </div>
+                        <div class="member-name">李营养师</div>
+                    </div>
+                    <div class="member-item">
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="成员头像">
+                        </div>
+                        <div class="member-name">赵医生</div>
+                    </div>
+                    <div class="member-item">
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/53.jpg" alt="成员头像">
+                        </div>
+                        <div class="member-name">更多</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 筛选选项 -->
+            <div class="post-filter">
+                <div class="filter-option active">最新发布</div>
+                <div class="filter-option">最热内容</div>
+                <div class="filter-option">精华内容</div>
+                <div class="filter-option">官方发布</div>
+                <div class="filter-option">专家问答</div>
+            </div>
+            
+            <!-- 置顶内容 -->
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="作者头像">
+                    </div>
+                    <div class="post-info">
+                        <div class="post-author">
+                            张志强 <i class="fas fa-check-circle verified-badge"></i>
+                            <span class="expert-tag">专家</span>
+                            <span class="pinned-tag">置顶</span>
+                        </div>
+                        <div class="post-meta">主任医师 · 北京协和医院 · 昨天</div>
+                    </div>
+                </div>
+                
+                <div class="post-title">【话题公告】健康饮食板块发帖规范与指南</div>
+                
+                <div class="post-content">
+                    为了保证本话题内容质量，请遵循以下规范：1. 内容需与健康饮食相关；2. 请尊重科学，不传播未经验证的饮食信息；3. 分享个人经验请注明"个人经验"标签；4. 专业人士请提供相关身份认证...
+                </div>
+                
+                <div class="post-tags">
+                    <div class="post-tag">话题公告</div>
+                    <div class="post-tag">社区规则</div>
+                </div>
+                
+                <div class="post-actions">
+                    <div class="post-action">
+                        <i class="far fa-thumbs-up"></i> 286
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-comment"></i> 52
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-star"></i> 收藏
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share-alt"></i> 分享
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 精选内容 -->
+            <div class="section-header">
+                精选内容
+                <span class="section-more">更多 <i class="fas fa-chevron-right"></i></span>
+            </div>
+            
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="作者头像">
+                    </div>
+                    <div class="post-info">
+                        <div class="post-author">
+                            王医生 <i class="fas fa-check-circle verified-badge"></i>
+                            <span class="expert-tag">专家</span>
+                        </div>
+                        <div class="post-meta">副主任医师 · 北京大学第三医院 · 3天前</div>
+                    </div>
+                </div>
+                
+                <div class="post-title">三高人群的日常饮食指南：这些食物要少吃！</div>
+                
+                <div class="post-content">
+                    随着生活水平提高，"三高"(高血压、高血糖、高血脂)已成为常见健康问题。科学饮食是控制"三高"的关键。以下食物建议少吃：1. 高盐食品，如咸菜、腌制品；2. 高糖食品，如甜点、含糖饮料...
+                </div>
+                
+                <div class="post-images">
+                    <div class="post-image">
+                        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="配图">
+                    </div>
+                    <div class="post-image">
+                        <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="配图">
+                    </div>
+                    <div class="post-image">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="配图">
+                    </div>
+                </div>
+                
+                <div class="post-tags">
+                    <div class="post-tag">三高</div>
+                    <div class="post-tag">科普</div>
+                    <div class="post-tag">饮食建议</div>
+                </div>
+                
+                <div class="post-actions">
+                    <div class="post-action">
+                        <i class="far fa-thumbs-up"></i> 1,432
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-comment"></i> 237
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-star"></i> 收藏
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share-alt"></i> 分享
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/86.jpg" alt="作者头像">
+                    </div>
+                    <div class="post-info">
+                        <div class="post-author">
+                            李营养师 <i class="fas fa-check-circle verified-badge"></i>
+                        </div>
+                        <div class="post-meta">国家二级营养师 · 5天前</div>
+                    </div>
+                </div>
+                
+                <div class="post-title">老年人营养均衡的一日三餐搭配推荐</div>
+                
+                <div class="post-content">
+                    老年人由于生理特点，饮食需要更注重营养均衡和消化吸收。今天分享适合老年人的一日三餐安排：早餐：杂粮粥+鸡蛋+青菜；午餐：蒸鱼+糙米饭+炒时蔬；晚餐：瘦肉汤+少量主食...
+                </div>
+                
+                <div class="post-images">
+                    <div class="post-image single">
+                        <img src="https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="配图">
+                    </div>
+                </div>
+                
+                <div class="post-tags">
+                    <div class="post-tag">老人饮食</div>
+                    <div class="post-tag">食谱推荐</div>
+                </div>
+                
+                <div class="post-actions">
+                    <div class="post-action">
+                        <i class="far fa-thumbs-up"></i> 875
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-comment"></i> 146
+                    </div>
+                    <div class="post-action">
+                        <i class="far fa-star"></i> 收藏
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share-alt"></i> 分享
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 发帖按钮 -->
+            <a href="community-post-create.html" class="floating-button">
+                <i class="fas fa-edit"></i>
+            </a>
+            
+            <!-- 底部导航栏 -->
+            <div class="nav-bar">
+                <a href="../home.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="../orders.html" class="nav-item">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>订单</span>
+                </a>
+                <a href="../community.html" class="nav-item active">
+                    <i class="fas fa-comments"></i>
+                    <span>社区</span>
+                </a>
+                <a href="../profile.html" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>我的</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代办买药服务 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #E8FFF8;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 15px 16px 10px;
+            color: #333;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 12px;
+            margin: 0 16px 15px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .service-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .service-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #E8FFF8;
+            color: #00C9A7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .service-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .service-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 0 16px 20px;
+        }
+        
+        .advantage-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .advantage-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: #E8FFF8;
+            color: #00C9A7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+        
+        .advantage-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .advantage-desc {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .delivery-card {
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 12px;
+            margin: 0 16px 20px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .delivery-header {
+            background-color: #00C9A7;
+            color: white;
+            padding: 12px 15px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .delivery-content {
+            padding: 15px;
+        }
+        
+        .delivery-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .delivery-row:last-child {
+            border-bottom: none;
+        }
+        
+        .delivery-type {
+            flex: 2;
+            display: flex;
+            align-items: center;
+        }
+        
+        .delivery-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background-color: #E8FFF8;
+            color: #00C9A7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .delivery-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .delivery-time {
+            flex: 1;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .delivery-price {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 600;
+            color: #FF6B6B;
+            text-align: right;
+        }
+        
+        .how-it-works {
+            margin: 0 16px 20px;
+        }
+        
+        .steps-container {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .step-line {
+            position: absolute;
+            left: 15px;
+            top: 40px;
+            bottom: 40px;
+            width: 2px;
+            background-color: #00C9A7;
+            z-index: 0;
+        }
+        
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background-color: #00C9A7;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .step-details {
+            flex: 1;
+            padding-top: 4px;
+        }
+        
+        .step-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .step-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .medicine-types {
+            margin: 0 16px 20px;
+        }
+        
+        .medicine-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .medicine-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .medicine-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #E8FFF8;
+            color: #00C9A7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .medicine-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .medicine-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        
+        .medicine-tag {
+            background-color: #F0F0F0;
+            color: #666;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 15px;
+        }
+        
+        .upload-prescription {
+            background-color: white;
+            border-radius: 12px;
+            margin: 0 16px 20px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .upload-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background-color: #E8FFF8;
+            color: #00C9A7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 26px;
+        }
+        
+        .upload-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .upload-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .upload-button {
+            background-color: #00C9A7;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 25px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .upload-button i {
+            margin-right: 8px;
+        }
+        
+        .reviews-section {
+            margin: 0 16px 20px;
+        }
+        
+        .review-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            margin-right: 10px;
+            overflow: hidden;
+        }
+        
+        .reviewer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .reviewer-info {
+            flex: 1;
+        }
+        
+        .reviewer-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .review-date {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .review-rating {
+            color: #FFCC00;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .review-content {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../home.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">代办买药服务</h1>
+            </div>
+            
+            <!-- 服务简介 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="service-title">处方药专业配送</div>
+                </div>
+                <div class="service-desc">
+                    我们提供专业的处方药代办配送服务，您只需上传处方，我们将协助完成药品的购买并配送至您指定的地点。全程专业人员服务，确保安全、便捷的用药需求。
+                </div>
+            </div>
+            
+            <!-- 服务优势 -->
+            <h2 class="section-title">服务优势</h2>
+            <div class="advantages-grid">
+                <div class="advantage-item">
+                    <div class="advantage-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="advantage-title">极速配送</div>
+                    <div class="advantage-desc">最快1小时送达，解决紧急用药需求</div>
+                </div>
+                
+                <div class="advantage-item">
+                    <div class="advantage-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="advantage-title">正品保障</div>
+                    <div class="advantage-desc">合作医院药房直供，确保药品正品</div>
+                </div>
+                
+                <div class="advantage-item">
+                    <div class="advantage-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="advantage-title">专业指导</div>
+                    <div class="advantage-desc">专业药师提供用药指导和建议</div>
+                </div>
+                
+                <div class="advantage-item">
+                    <div class="advantage-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="advantage-title">全城覆盖</div>
+                    <div class="advantage-desc">覆盖全城区域，特殊地区可预约</div>
+                </div>
+            </div>
+            
+            <!-- 配送方式和价格 -->
+            <h2 class="section-title">配送方式</h2>
+            <div class="delivery-card">
+                <div class="delivery-header">
+                    药品配送服务价格表
+                </div>
+                <div class="delivery-content">
+                    <div class="delivery-row">
+                        <div class="delivery-type">
+                            <div class="delivery-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="delivery-name">急速配送</div>
+                        </div>
+                        <div class="delivery-time">1小时内</div>
+                        <div class="delivery-price">¥30</div>
+                    </div>
+                    
+                    <div class="delivery-row">
+                        <div class="delivery-type">
+                            <div class="delivery-icon">
+                                <i class="fas fa-motorcycle"></i>
+                            </div>
+                            <div class="delivery-name">当日达</div>
+                        </div>
+                        <div class="delivery-time">3小时内</div>
+                        <div class="delivery-price">¥20</div>
+                    </div>
+                    
+                    <div class="delivery-row">
+                        <div class="delivery-type">
+                            <div class="delivery-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="delivery-name">标准配送</div>
+                        </div>
+                        <div class="delivery-time">24小时内</div>
+                        <div class="delivery-price">¥10</div>
+                    </div>
+                    
+                    <div class="delivery-row">
+                        <div class="delivery-type">
+                            <div class="delivery-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="delivery-name">定期配送</div>
+                        </div>
+                        <div class="delivery-time">按需定制</div>
+                        <div class="delivery-price">¥8起/次</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 服务流程 -->
+            <h2 class="section-title">服务流程</h2>
+            <div class="how-it-works">
+                <div class="steps-container">
+                    <div class="step-line"></div>
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-details">
+                            <div class="step-title">上传处方</div>
+                            <div class="step-desc">
+                                通过APP上传医生开具的处方照片或电子处方，也可以直接拍照上传纸质处方。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-details">
+                            <div class="step-title">药师审核</div>
+                            <div class="step-desc">
+                                专业药师审核处方，确认药品信息，必要时会联系您确认相关细节。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-details">
+                            <div class="step-title">支付费用</div>
+                            <div class="step-desc">
+                                确认药品明细和配送费用后，在线完成支付。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-details">
+                            <div class="step-title">配药配送</div>
+                            <div class="step-desc">
+                                工作人员到医院或合作药房购买药品，按选择的配送方式送达指定地点。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">5</div>
+                        <div class="step-details">
+                            <div class="step-title">送达确认</div>
+                            <div class="step-desc">
+                                药品送达后，配送人员会提供用药指导，确认药品无误后完成交接。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 药品类型 -->
+            <h2 class="section-title">可配送药品类型</h2>
+            <div class="medicine-types">
+                <div class="medicine-card">
+                    <div class="medicine-title">
+                        <div class="medicine-icon">
+                            <i class="fas fa-prescription-bottle"></i>
+                        </div>
+                        常见处方药
+                    </div>
+                    <div class="medicine-desc">
+                        需要医生处方的各类药品，包括但不限于心血管药物、糖尿病药物、抗生素等。
+                    </div>
+                    <div class="medicine-examples">
+                        <span class="medicine-tag">降压药</span>
+                        <span class="medicine-tag">降糖药</span>
+                        <span class="medicine-tag">抗生素</span>
+                        <span class="medicine-tag">抗凝药</span>
+                        <span class="medicine-tag">激素类药物</span>
+                    </div>
+                </div>
+                
+                <div class="medicine-card">
+                    <div class="medicine-title">
+                        <div class="medicine-icon">
+                            <i class="fas fa-capsules"></i>
+                        </div>
+                        非处方药品
+                    </div>
+                    <div class="medicine-desc">
+                        常用的非处方药品，无需医生处方即可购买的各类药物。
+                    </div>
+                    <div class="medicine-examples">
+                        <span class="medicine-tag">感冒药</span>
+                        <span class="medicine-tag">止痛药</span>
+                        <span class="medicine-tag">消化药</span>
+                        <span class="medicine-tag">维生素</span>
+                        <span class="medicine-tag">外用药膏</span>
+                    </div>
+                </div>
+                
+                <div class="medicine-card">
+                    <div class="medicine-title">
+                        <div class="medicine-icon">
+                            <i class="fas fa-first-aid"></i>
+                        </div>
+                        医疗用品
+                    </div>
+                    <div class="medicine-desc">
+                        各类常用医疗耗材和医疗用品，满足日常医疗护理需求。
+                    </div>
+                    <div class="medicine-examples">
+                        <span class="medicine-tag">血糖试纸</span>
+                        <span class="medicine-tag">纱布绷带</span>
+                        <span class="medicine-tag">口罩</span>
+                        <span class="medicine-tag">消毒液</span>
+                        <span class="medicine-tag">测温计</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 上传处方 -->
+            <div class="upload-prescription">
+                <div class="upload-icon">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <div class="upload-title">立即上传处方</div>
+                <div class="upload-desc">
+                    上传处方照片或电子处方，我们将尽快为您配送药品。处方信息严格保密，请放心使用。
+                </div>
+                <button class="upload-button">
+                    <i class="fas fa-camera"></i>上传处方
+                </button>
+            </div>
+            
+            <!-- 用户评价 -->
+            <h2 class="section-title">用户评价</h2>
+            <div class="reviews-section">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="用户头像">
+                        </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">陈先生</div>
+                            <div class="review-date">2023-08-03</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="review-content">
+                        母亲行动不便需要长期用药，通过这个服务配送降压药，非常方便。配送员很专业，还主动讲解了药品的用法用量，比自己去排队买药省心多了，强烈推荐！
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="用户头像">
+                        </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">王女士</div>
+                            <div class="review-date">2023-07-25</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="review-content">
+                        半夜孩子发烧，医生开了处方，但我一个人在家不方便出门买药。选择了急速配送服务，不到一小时药品就送到了，解了燃眉之急。价格比预想的合理，服务态度也很好。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <a href="../home.html" class="tab-item active">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="../orders.html" class="tab-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>订单</span>
+            </a>
+            <a href="../community.html" class="tab-item">
+                <i class="fas fa-users"></i>
+                <span>社区</span>
+            </a>
+            <a href="../profile.html" class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

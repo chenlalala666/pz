@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单详情 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #4A90E2;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .section-container {
+            background-color: white;
+            border-radius: 12px;
+            margin: 0 16px 15px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .order-status-bar {
+            background-color: #4A90E2;
+            color: white;
+            padding: 20px 16px;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+        }
+        
+        .status-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .status-desc {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .status-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 36px;
+            opacity: 0.25;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+            color: #4A90E2;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        
+        .info-label {
+            width: 90px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .info-value {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: #EEEEEE;
+            margin: 15px 0;
+        }
+        
+        .personnel-card {
+            display: flex;
+            align-items: center;
+            background-color: #F8F9FA;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .personnel-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            margin-right: 15px;
+        }
+        
+        .personnel-info {
+            flex: 1;
+        }
+        
+        .personnel-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: #333;
+        }
+        
+        .personnel-title {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .personnel-rating {
+            font-size: 13px;
+            color: #FF9500;
+        }
+        
+        .contact-button {
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 12px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-button i {
+            margin-right: 5px;
+        }
+        
+        .timeline {
+            position: relative;
+            margin-left: 8px;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            left: 8px;
+            width: 2px;
+            height: 100%;
+            background-color: #E0E0E0;
+            z-index: 1;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            padding-bottom: 25px;
+            z-index: 2;
+        }
+        
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid #E0E0E0;
+            z-index: 3;
+        }
+        
+        .timeline-dot.active {
+            background-color: #4A90E2;
+            border-color: #4A90E2;
+        }
+        
+        .timeline-dot.active:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        
+        .timeline-content {
+            position: relative;
+        }
+        
+        .timeline-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .timeline-time {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .action-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .secondary-button {
+            background-color: #F2F2F2;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../orders.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">订单详情</h1>
+            </div>
+            
+            <!-- 订单状态 -->
+            <div class="order-status-bar">
+                <div class="status-title">进行中</div>
+                <div class="status-desc">陪诊员已到达医院，正在等待就诊</div>
+                <div class="status-icon">
+                    <i class="fas fa-hospital-user"></i>
+                </div>
+            </div>
+            
+            <!-- 订单信息 -->
+            <div class="section-container">
+                <div class="section-title">
+                    <i class="fas fa-info-circle"></i>
+                    订单信息
+                </div>
+                <div class="info-row">
+                    <div class="info-label">订单编号</div>
+                    <div class="info-value">202309150001</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">服务类型</div>
+                    <div class="info-value">门诊陪诊 - 内科</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">服务时间</div>
+                    <div class="info-value">2023-09-15 09:30</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">服务医院</div>
+                    <div class="info-value">北京协和医院</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">就诊人</div>
+                    <div class="info-value">张先生</div>
+                </div>
+                <div class="divider"></div>
+                <div class="info-row">
+                    <div class="info-label">订单金额</div>
+                    <div class="info-value" style="color: #FF5722; font-weight: 600;">¥398.00</div>
+                </div>
+            </div>
+            
+            <!-- 服务人员 -->
+            <div class="section-container">
+                <div class="section-title">
+                    <i class="fas fa-user-nurse"></i>
+                    服务人员
+                </div>
+                <div class="personnel-card">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="personnel-avatar" alt="陪诊员">
+                    <div class="personnel-info">
+                        <div class="personnel-name">陈阿姨</div>
+                        <div class="personnel-title">专业陪诊员 | 5年经验</div>
+                        <div class="personnel-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            4.8分
+                        </div>
+                    </div>
+                    <button class="contact-button">
+                        <i class="fas fa-phone-alt"></i>
+                        联系
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 订单进度 -->
+            <div class="section-container">
+                <div class="section-title">
+                    <i class="fas fa-tasks"></i>
+                    订单进度
+                </div>
+                <div class="timeline">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">已到达医院</div>
+                            <div class="timeline-time">09:15</div>
+                            <div class="timeline-desc">陪诊员已到达北京协和医院门诊大厅</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">已接到就诊人</div>
+                            <div class="timeline-time">09:25</div>
+                            <div class="timeline-desc">已与就诊人在医院南门汇合</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">前往就诊科室</div>
+                            <div class="timeline-time">09:35</div>
+                            <div class="timeline-desc">正在前往内科门诊区，准备就诊</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">就诊中</div>
+                            <div class="timeline-time">待定</div>
+                            <div class="timeline-desc">正在等待医生就诊</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">检查/取药</div>
+                            <div class="timeline-time">待定</div>
+                            <div class="timeline-desc">根据医嘱协助进行检查或取药</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">服务完成</div>
+                            <div class="timeline-time">待定</div>
+                            <div class="timeline-desc">服务结束，请对服务进行评价</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 备注信息 -->
+            <div class="section-container">
+                <div class="section-title">
+                    <i class="fas fa-clipboard-list"></i>
+                    备注信息
+                </div>
+                <div class="info-value" style="margin-bottom: 10px;">
+                    患者有高血压病史，请注意协助带好药物。需要全程陪同问诊并记录医嘱。
+                </div>
+            </div>
+            
+            <!-- 底部按钮 -->
+            <div style="padding: 0 16px 20px;">
+                <button class="action-button">联系客服</button>
+                <button class="action-button secondary-button">取消订单</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

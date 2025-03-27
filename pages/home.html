@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陪诊APP - 首页</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .search-bar {
+            background-color: #F2F2F7;
+            border-radius: 10px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            margin: 0 16px 15px;
+        }
+        
+        .search-bar i {
+            color: #8E8E93;
+            margin-right: 10px;
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            flex: 1;
+            padding: 0;
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .banner {
+            height: 150px;
+            margin: 0 16px 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 10px 16px 20px;
+            text-align: center;
+        }
+        
+        .service-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+        }
+        
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: #EBF5FF;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+        
+        .service-name {
+            font-size: 12px;
+            color: #333;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+        }
+        
+        .more-link {
+            color: var(--gray-color);
+            font-size: 14px;
+            text-decoration: none;
+        }
+        
+        .doctor-list {
+            padding: 0 16px;
+        }
+        
+        .doctor-card {
+            display: flex;
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .doctor-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 35px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .doctor-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .doctor-info {
+            flex: 1;
+        }
+        
+        .doctor-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .doctor-title {
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        
+        .doctor-hospital {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .doctor-tags {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background-color: #F0F0F0;
+            color: #666;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .category-tabs {
+            display: flex;
+            overflow-x: auto;
+            padding: 0 16px;
+            margin-bottom: 15px;
+            scrollbar-width: none;
+        }
+        
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-tab {
+            padding: 8px 16px;
+            margin-right: 10px;
+            white-space: nowrap;
+            background-color: #F0F0F0;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .category-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* 紧急呼救按钮 */
+        .emergency-button {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background-color: #FF3B30;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(255, 59, 48, 0.5);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        
+        .emergency-button i {
+            font-size: 24px;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(255, 59, 48, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+            }
+        }
+        
+        /* 智能推荐 */
+        .smart-recommendations {
+            padding: 0 16px 15px;
+        }
+        
+        .recommendation-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .recommendation-header {
+            padding: 12px 15px;
+            background-color: #F8F8F8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .recommendation-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .recommendation-content {
+            padding: 15px;
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .recommendation-content::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .recommendation-item {
+            min-width: 120px;
+            margin-right: 12px;
+            background-color: #F9F9F9;
+            border-radius: 8px;
+            padding: 12px;
+            position: relative;
+        }
+        
+        .recommendation-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #EBF5FF;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+        
+        .recommendation-item-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .recommendation-item-desc {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .recommendation-tag {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #FF9500;
+            color: white;
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
+        /* 快速预约 */
+        .quick-booking {
+            padding: 0 16px 15px;
+        }
+        
+        .booking-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .booking-form {
+            margin-top: 10px;
+        }
+        
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+        
+        .booking-input {
+            flex: 1;
+            background-color: #F5F5F5;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+        }
+        
+        .booking-select {
+            flex: 1;
+            background-color: #F5F5F5;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+        
+        .voice-input-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            margin-left: 10px;
+        }
+        
+        .emergency-response {
+            background: linear-gradient(135deg, #FF416C, #FF4B2B);
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .emergency-response i {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .emergency-response-text {
+            flex: 1;
+        }
+        
+        .emergency-response-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .emergency-response-desc {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .attendant-list {
+            margin-top: 15px;
+        }
+        
+        .attendant-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #F0F0F0;
+            position: relative;
+        }
+        
+        .attendant-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            margin-right: 12px;
+        }
+        
+        .attendant-info {
+            flex: 1;
+        }
+        
+        .attendant-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .attendant-credentials {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        
+        .credential-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #E8F4FF;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 5px;
+        }
+        
+        .credential-icon i {
+            font-size: 10px;
+            color: var(--primary-color);
+        }
+        
+        .attendant-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+        
+        .rating-stars {
+            color: #FFCC00;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+        
+        .rating-value {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .attendant-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FFF5EA;
+            color: #FF9500;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        .blue-bg {
+            background-color: #EBF5FF;
+            color: #4A90E2;
+        }
+        
+        .orange-bg {
+            background-color: #FFF5E8;
+            color: #FF9500;
+        }
+        
+        .purple-bg {
+            background-color: #F8E8FF;
+            color: #9C6ADE;
+        }
+        
+        .green-bg {
+            background-color: #E8FFF8;
+            color: #00C9A7;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面标题栏 -->
+            <div class="header">
+                <div class="header-left">
+                    <i class="fas fa-map-marker-alt"></i> 北京
+                </div>
+                <div class="header-title">智慧陪诊</div>
+                <div class="header-right">
+                    <i class="far fa-bell"></i>
+                </div>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <div class="content">
+                <!-- 搜索栏 -->
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜索医院、诊室或疾病">
+                </div>
+                
+                <!-- 轮播图 -->
+                <div class="banner">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="医疗服务">
+                </div>
+                
+                <!-- 服务分类 -->
+                <div class="service-grid">
+                    <a href="human-escort.html" class="service-item">
+                        <div class="service-icon blue-bg">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="service-name">全程陪诊</div>
+                    </a>
+                    <a href="in-hospital.html" class="service-item">
+                        <div class="service-icon orange-bg">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="service-name">院内陪诊</div>
+                    </a>
+                    <a href="out-hospital.html" class="service-item">
+                        <div class="service-icon purple-bg">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <div class="service-name">代办问诊</div>
+                    </a>
+                    <a href="emergency-call.html" class="service-item">
+                        <div class="service-icon green-bg">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div class="service-name">代办买药</div>
+                    </a>
+                </div>
+                
+                <!-- 推荐服务 -->
+                <div class="section-header">
+                    <div class="section-title">推荐服务</div>
+                    <a href="#" class="more-link">更多服务 <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <!-- 快速预约 -->
+                <div class="section-header">
+                    <div class="section-title">快速预约</div>
+                    <a href="#" class="more-link">全部选项 <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <div class="quick-booking">
+                    <div class="booking-card">
+                        <div class="emergency-response">
+                            <i class="fas fa-bolt"></i>
+                            <div class="emergency-response-text">
+                                <div class="emergency-response-title">极速响应</div>
+                                <div class="emergency-response-desc">紧急情况下30分钟内专业人员可达</div>
+                            </div>
+                        </div>
+                        
+                        <div class="booking-form">
+                            <div class="form-row">
+                                <input type="text" class="booking-input" placeholder="选择时间">
+                                <input type="text" class="booking-input" placeholder="选择医院/诊所">
+                            </div>
+                            <div class="form-row">
+                                <select class="booking-select">
+                                    <option value="" disabled selected>服务类型</option>
+                                    <option value="human_in">人工陪诊-院内</option>
+                                    <option value="human_out">人工陪诊-院外</option>
+                                </select>
+                                <input type="text" class="booking-input" placeholder="填写就医需求..." style="flex: 2">
+                                <button class="voice-input-btn">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="attendant-list">
+                            <div class="attendant-item">
+                                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="attendant-avatar" alt="陪诊员">
+                                <div class="attendant-info">
+                                    <div class="attendant-name">陈阿姨 <span style="font-size: 12px; color: #4A90E2;">人工陪诊师</span></div>
+                                    <div class="attendant-credentials">
+                                        <div class="credential-icon">
+                                            <i class="fas fa-user-nurse"></i>
+                                        </div>
+                                        <div class="credential-icon">
+                                            <i class="fas fa-first-aid"></i>
+                                        </div>
+                                    </div>
+                                    <div class="attendant-rating">
+                                        <div class="rating-stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <div class="rating-value">4.8 (126条评价)</div>
+                                    </div>
+                                </div>
+                                <div class="attendant-tag">院内/院外均可</div>
+                            </div>
+                            
+                            <div class="attendant-item">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="attendant-avatar" alt="陪诊员">
+                                <div class="attendant-info">
+                                    <div class="attendant-name">王护士 <span style="font-size: 12px; color: #4A90E2;">人工陪诊师</span></div>
+                                    <div class="attendant-credentials">
+                                        <div class="credential-icon">
+                                            <i class="fas fa-user-nurse"></i>
+                                        </div>
+                                        <div class="credential-icon">
+                                            <i class="fas fa-first-aid"></i>
+                                        </div>
+                                        <div class="credential-icon">
+                                            <i class="fas fa-heartbeat"></i>
+                                        </div>
+                                    </div>
+                                    <div class="attendant-rating">
+                                        <div class="rating-stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="rating-value">5.0 (98条评价)</div>
+                                    </div>
+                                </div>
+                                <div class="attendant-tag">院内服务专家</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 智能推荐 -->
+                <div class="section-header">
+                    <div class="section-title">为您推荐</div>
+                    <a href="#" class="more-link">查看全部 <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <div class="smart-recommendations">
+                    <div class="recommendation-card">
+                        <div class="recommendation-header">
+                            <div class="recommendation-title">
+                                <i class="fas fa-lightbulb" style="color: #FFCC00; margin-right: 5px;"></i> 
+                                基于您的健康档案
+                            </div>
+                        </div>
+                        <div class="recommendation-content">
+                            <div class="recommendation-item">
+                                <div class="recommendation-tag">紧急响应率99%</div>
+                                <div class="recommendation-item-icon">
+                                    <i class="fas fa-procedures"></i>
+                                </div>
+                                <div class="recommendation-item-title">术后陪诊</div>
+                                <div class="recommendation-item-desc">人工院内陪护</div>
+                            </div>
+                            <div class="recommendation-item">
+                                <div class="recommendation-item-icon">
+                                    <i class="fas fa-file-medical-alt"></i>
+                                </div>
+                                <div class="recommendation-item-title">健康档案</div>
+                                <div class="recommendation-item-desc">自动建立病历</div>
+                            </div>
+                            <div class="recommendation-item">
+                                <div class="recommendation-tag">新服务</div>
+                                <div class="recommendation-item-icon" style="background-color: #F8E8FF;">
+                                    <i class="fas fa-home" style="color: #9C6ADE;"></i>
+                                </div>
+                                <div class="recommendation-item-title">居家跟进</div>
+                                <div class="recommendation-item-desc">院外随访服务</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 热门推荐 -->
+                <div class="section-header">
+                    <div class="section-title">热门医生</div>
+                    <a href="#" class="more-link">查看全部 <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <!-- 分类标签 -->
+                <div class="category-tabs">
+                    <div class="category-tab active">全部</div>
+                    <div class="category-tab">内科</div>
+                    <div class="category-tab">外科</div>
+                    <div class="category-tab">妇产科</div>
+                    <div class="category-tab">儿科</div>
+                    <div class="category-tab">皮肤科</div>
+                    <div class="category-tab">神经科</div>
+                </div>
+                
+                <!-- 医生列表 -->
+                <div class="doctor-list">
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">
+                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="张医生">
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-name">张志强 主任医师</div>
+                            <div class="doctor-title">心内科 | 冠心病专家</div>
+                            <div class="doctor-hospital">北京协和医院</div>
+                            <div class="doctor-tags">
+                                <span class="tag">冠心病</span>
+                                <span class="tag">心力衰竭</span>
+                                <span class="tag">高血压</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">
+                            <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="李医生">
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-name">李明华 副主任医师</div>
+                            <div class="doctor-title">神经内科 | 脑血管病专家</div>
+                            <div class="doctor-hospital">首都医科大学附属北京天坛医院</div>
+                            <div class="doctor-tags">
+                                <span class="tag">脑梗塞</span>
+                                <span class="tag">偏头痛</span>
+                                <span class="tag">癫痫</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">
+                            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="王医生">
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-name">王丽娜 主任医师</div>
+                            <div class="doctor-title">妇产科 | 产科专家</div>
+                            <div class="doctor-hospital">北京大学第一医院</div>
+                            <div class="doctor-tags">
+                                <span class="tag">高危妊娠</span>
+                                <span class="tag">产前检查</span>
+                                <span class="tag">妇科肿瘤</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 紧急呼救按钮 -->
+        <div class="emergency-button">
+            <i class="fas fa-plus-circle"></i>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <a href="home.html" class="tab-item active">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="orders.html" class="tab-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>订单</span>
+            </a>
+            <a href="community.html" class="tab-item">
+                <i class="fas fa-users"></i>
+                <span>社区</span>
+            </a>
+            <a href="profile.html" class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+        
+        <!-- 紧急呼救弹窗 (默认隐藏) -->
+        <div id="emergency-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center;">
+            <div style="background: white; width: 320px; border-radius: 16px; padding: 20px; position: relative;">
+                <div style="position: absolute; right: 15px; top: 15px; font-size: 20px; color: #999;">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="width: 70px; height: 70px; background-color: #FF3B30; color: white; border-radius: 35px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                        <i class="fas fa-ambulance" style="font-size: 30px;"></i>
+                    </div>
+                    <h3 style="font-size: 20px; margin-bottom: 5px;">紧急陪诊呼救</h3>
+                    <p style="color: #666; font-size: 14px;">位置信息与健康档案将自动发送</p>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <label style="flex: 1; font-size: 14px;">紧急人工陪诊</label>
+                        <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                            <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4CD964; border-radius: 12px; transition: .4s;"></span>
+                        </label>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <label style="flex: 1; font-size: 14px;">联系紧急联系人</label>
+                        <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                            <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4CD964; border-radius: 12px; transition: .4s;"></span>
+                        </label>
+                    </div>
+                </div>
+                <textarea placeholder="描述紧急情况..." style="width: 100%; border: 1px solid #E0E0E0; border-radius: 8px; padding: 10px; font-size: 14px; min-height: 80px; margin-bottom: 15px;"></textarea>
+                <button style="width: 100%; background-color: #FF3B30; color: white; border: none; border-radius: 10px; padding: 12px; font-size: 16px; font-weight: bold;">
+                    确认呼救
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

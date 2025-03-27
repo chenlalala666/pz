@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务评价 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #4A90E2;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .section-container {
+            background-color: white;
+            border-radius: 12px;
+            margin: 0 16px 15px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .service-summary {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #EBF5FF;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #4A90E2;
+            margin-right: 15px;
+        }
+        
+        .service-details {
+            flex: 1;
+        }
+        
+        .service-hospital {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .service-type {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .service-time {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+            color: #4A90E2;
+        }
+        
+        .personnel {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .personnel-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            margin-right: 15px;
+        }
+        
+        .personnel-info {
+            flex: 1;
+        }
+        
+        .personnel-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: #333;
+        }
+        
+        .personnel-title {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .rating-group {
+            margin-bottom: 20px;
+        }
+        
+        .rating-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .rating-stars {
+            display: flex;
+            font-size: 30px;
+            color: #DDDDDD;
+        }
+        
+        .rating-stars i {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        
+        .rating-stars i.active {
+            color: #FFCC00;
+        }
+        
+        .rating-description {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #4A90E2;
+            font-weight: 500;
+        }
+        
+        .tag-options {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .tag-option {
+            background-color: #F5F5F5;
+            color: #666;
+            font-size: 13px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        
+        .tag-option.selected {
+            background-color: #EBF5FF;
+            color: #4A90E2;
+            border: 1px solid #4A90E2;
+        }
+        
+        .comment-area {
+            width: 100%;
+            height: 120px;
+            border: 1px solid #E0E0E0;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            resize: none;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        
+        .anonymous-option {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .anonymous-option input {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .anonymous-option label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .photo-upload {
+            margin-top: 15px;
+        }
+        
+        .photo-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .photo-title span {
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .photo-item {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-color: #F5F5F5;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .action-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../orders.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">服务评价</h1>
+            </div>
+            
+            <div class="section-container">
+                <!-- 服务信息摘要 -->
+                <div class="service-summary">
+                    <div class="service-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <div class="service-details">
+                        <div class="service-hospital">首都医科大学附属北京朝阳医院</div>
+                        <div class="service-type">报告解读 - 心脏彩超</div>
+                        <div class="service-time">2023-09-05 16:30</div>
+                    </div>
+                </div>
+                
+                <!-- 评价人员 -->
+                <div class="section-title">
+                    <i class="fas fa-user-md"></i>
+                    服务人员评价
+                </div>
+                <div class="personnel">
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="personnel-avatar" alt="医生">
+                    <div class="personnel-info">
+                        <div class="personnel-name">刘医生</div>
+                        <div class="personnel-title">副主任医师</div>
+                    </div>
+                </div>
+                
+                <!-- 综合评分 -->
+                <div class="rating-group">
+                    <div class="rating-label">综合评分</div>
+                    <div class="rating-stars">
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="rating-description">很满意，服务超出预期</div>
+                </div>
+                
+                <!-- 专业评分 -->
+                <div class="rating-group">
+                    <div class="rating-label">专业程度</div>
+                    <div class="rating-stars">
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                    </div>
+                </div>
+                
+                <!-- 服务态度 -->
+                <div class="rating-group">
+                    <div class="rating-label">服务态度</div>
+                    <div class="rating-stars">
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- 标签选择 -->
+                <div class="rating-label">选择标签（可多选）</div>
+                <div class="tag-options">
+                    <div class="tag-option selected">专业解读</div>
+                    <div class="tag-option selected">耐心细致</div>
+                    <div class="tag-option">通俗易懂</div>
+                    <div class="tag-option">指导详细</div>
+                    <div class="tag-option selected">回应迅速</div>
+                    <div class="tag-option">服务周到</div>
+                </div>
+                
+                <!-- 评价内容 -->
+                <div class="rating-label">评价内容</div>
+                <textarea class="comment-area" placeholder="分享您对本次服务的感受和建议，帮助我们提升服务质量..."></textarea>
+                
+                <!-- 匿名选项 -->
+                <div class="anonymous-option">
+                    <input type="checkbox" id="anonymous-checkbox">
+                    <label for="anonymous-checkbox">匿名评价</label>
+                </div>
+                
+                <!-- 上传照片 -->
+                <div class="photo-upload">
+                    <div class="photo-title">
+                        上传照片 <span>选填，最多4张</span>
+                    </div>
+                    <div class="photo-grid">
+                        <div class="photo-item">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 提交按钮 -->
+                <button class="action-button">提交评价</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

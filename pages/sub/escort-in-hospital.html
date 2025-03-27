@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>院内陪诊服务 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #FFF5E8;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 15px 16px 10px;
+            color: #333;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 12px;
+            margin: 0 16px 15px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .service-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .service-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #FFF5E8;
+            color: #FF9500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .service-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .service-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 0 16px 20px;
+        }
+        
+        .service-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .service-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #FFF5E8;
+            color: #FF9500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .service-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .service-item-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .price-table {
+            margin: 0 16px 20px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .price-table-header {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .price-row {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .price-row:last-child {
+            border-bottom: none;
+        }
+        
+        .price-service {
+            flex: 3;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .price-amount {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 500;
+            color: #FF6B6B;
+            text-align: right;
+        }
+        
+        .price-unit {
+            flex: 1;
+            font-size: 14px;
+            color: #999;
+            text-align: right;
+        }
+        
+        .staff-list {
+            margin: 0 16px;
+        }
+        
+        .staff-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+        }
+        
+        .staff-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+        
+        .staff-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .staff-info {
+            flex: 1;
+        }
+        
+        .staff-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .staff-title {
+            font-size: 12px;
+            color: #FF9500;
+            margin-left: 8px;
+        }
+        
+        .staff-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .rating-stars {
+            color: #FFCC00;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        
+        .rating-score {
+            font-size: 14px;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+        
+        .rating-count {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .staff-expertise {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        
+        .expertise-tag {
+            background-color: #FFF5E8;
+            color: #FF9500;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .staff-description {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .book-button {
+            background-color: #FF9500;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 6px 12px;
+            font-size: 13px;
+            float: right;
+        }
+        
+        .reviews-section {
+            margin: 0 16px 20px;
+        }
+        
+        .review-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            margin-right: 10px;
+            overflow: hidden;
+        }
+        
+        .reviewer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .reviewer-info {
+            flex: 1;
+        }
+        
+        .reviewer-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .review-date {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .review-rating {
+            color: #FFCC00;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .review-content {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .service-tags {
+            display: flex;
+            overflow-x: auto;
+            padding: 0 16px 10px;
+            margin: 10px 0 15px;
+            scrollbar-width: none;
+        }
+        
+        .service-tags::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .service-tag {
+            background-color: #FFF5E8;
+            color: #FF9500;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            margin-right: 8px;
+            white-space: nowrap;
+        }
+        
+        .service-tag.active {
+            background-color: #FF9500;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../home.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">院内陪诊服务</h1>
+            </div>
+            
+            <!-- 服务简介 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="service-title">院内专业陪诊</div>
+                </div>
+                <div class="service-desc">
+                    院内陪诊服务专注于为患者提供医院内部的全方位陪护和协助，包括挂号、候诊、检查陪同、医嘱记录等环节。由经验丰富的专业陪诊人员提供，让您在医院内的就医体验更加舒适便捷。
+                </div>
+            </div>
+            
+            <!-- 服务类型标签 -->
+            <div class="service-tags">
+                <div class="service-tag active">全部服务</div>
+                <div class="service-tag">普通陪诊</div>
+                <div class="service-tag">专家门诊</div>
+                <div class="service-tag">检查陪同</div>
+                <div class="service-tag">住院手续</div>
+                <div class="service-tag">VIP服务</div>
+            </div>
+            
+            <!-- 服务内容 -->
+            <h2 class="section-title">服务内容</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="service-item-title">专人导航至科室</div>
+                    <div class="service-item-desc">熟悉医院布局，快速引导至正确科室，节省寻找时间</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="service-item-title">代办挂号缴费</div>
+                    <div class="service-item-desc">熟悉挂号流程，代为办理挂号、缴费等手续</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="service-item-title">检查陪同</div>
+                    <div class="service-item-desc">陪同患者进行各项检查，解释检查流程，缓解紧张情绪</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-notes-medical"></i>
+                    </div>
+                    <div class="service-item-title">医嘱记录</div>
+                    <div class="service-item-desc">详细记录医生诊断和建议，避免遗漏重要信息</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="service-item-title">代取药品</div>
+                    <div class="service-item-desc">代患者在医院药房取药，核对药品信息</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-procedures"></i>
+                    </div>
+                    <div class="service-item-title">办理住院手续</div>
+                    <div class="service-item-desc">协助办理住院、转院等手续，熟悉各项流程</div>
+                </div>
+            </div>
+            
+            <!-- 价格表 -->
+            <h2 class="section-title">服务价格</h2>
+            <div class="price-table">
+                <div class="price-table-header">院内陪诊服务价格表</div>
+                <div class="price-row">
+                    <div class="price-service">普通门诊陪诊</div>
+                    <div class="price-amount">¥150</div>
+                    <div class="price-unit">每次</div>
+                </div>
+                <div class="price-row">
+                    <div class="price-service">专家门诊陪诊</div>
+                    <div class="price-amount">¥200</div>
+                    <div class="price-unit">每次</div>
+                </div>
+                <div class="price-row">
+                    <div class="price-service">检查陪同服务</div>
+                    <div class="price-amount">¥120</div>
+                    <div class="price-unit">每项</div>
+                </div>
+                <div class="price-row">
+                    <div class="price-service">住院手续办理</div>
+                    <div class="price-amount">¥180</div>
+                    <div class="price-unit">每次</div>
+                </div>
+                <div class="price-row">
+                    <div class="price-service">VIP全程陪护</div>
+                    <div class="price-amount">¥500</div>
+                    <div class="price-unit">每天</div>
+                </div>
+            </div>
+            
+            <!-- 服务人员 -->
+            <h2 class="section-title">优质陪诊人员</h2>
+            <div class="staff-list">
+                <div class="staff-card">
+                    <div class="staff-avatar">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="王医助">
+                    </div>
+                    <div class="staff-info">
+                        <div class="staff-name">
+                            王医助 <span class="staff-title">资深陪诊师</span>
+                        </div>
+                        <div class="staff-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="rating-score">5.0</div>
+                            <div class="rating-count">(89条评价)</div>
+                        </div>
+                        <div class="staff-expertise">
+                            <span class="expertise-tag">三甲医院经验</span>
+                            <span class="expertise-tag">专家门诊</span>
+                            <span class="expertise-tag">检查陪同</span>
+                        </div>
+                        <div class="staff-description">
+                            前三甲医院医助，拥有5年陪诊经验，熟悉各大医院流程和科室分布，专注于普通门诊和专家门诊陪诊服务。
+                        </div>
+                        <button class="book-button">预约</button>
+                    </div>
+                </div>
+                
+                <div class="staff-card">
+                    <div class="staff-avatar">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="李护士">
+                    </div>
+                    <div class="staff-info">
+                        <div class="staff-name">
+                            李护士 <span class="staff-title">专业陪检师</span>
+                        </div>
+                        <div class="staff-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <div class="rating-score">4.8</div>
+                            <div class="rating-count">(75条评价)</div>
+                        </div>
+                        <div class="staff-expertise">
+                            <span class="expertise-tag">退休护士</span>
+                            <span class="expertise-tag">检查陪同</span>
+                            <span class="expertise-tag">医嘱解读</span>
+                        </div>
+                        <div class="staff-description">
+                            退休护士，20年临床经验，擅长各类检查陪同和医嘱解读，可详细记录就诊过程，协助患者理解医嘱。
+                        </div>
+                        <button class="book-button">预约</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 用户评价 -->
+            <h2 class="section-title">用户评价</h2>
+            <div class="reviews-section">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="用户头像">
+                        </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">张女士</div>
+                            <div class="review-date">2023-06-15</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="review-content">
+                        带父亲去看专家门诊，王医助非常专业，提前联系我了解情况，到医院后直接带我们找到专家诊室，全程协助沟通，解释医嘱，还帮我们整理了后续治疗方案。非常满意！
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1565464027194-7957a2295fb7?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="用户头像">
+                        </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">刘先生</div>
+                            <div class="review-date">2023-05-20</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="review-content">
+                        李护士帮我母亲做了一系列检查陪同，她非常耐心地解释每个检查的目的和注意事项，缓解了母亲的紧张情绪。医嘱记录也很详细，回家后能清楚了解下一步治疗计划。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <a href="../home.html" class="tab-item active">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="../orders.html" class="tab-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>订单</span>
+            </a>
+            <a href="../community.html" class="tab-item">
+                <i class="fas fa-users"></i>
+                <span>社区</span>
+            </a>
+            <a href="../profile.html" class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

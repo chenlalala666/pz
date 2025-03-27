@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #4A90E2;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .share-button {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .post-container {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .post-author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            margin-right: 12px;
+        }
+        
+        .post-author-info {
+            flex: 1;
+        }
+        
+        .post-author-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .post-time {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .follow-button {
+            background-color: #F0F7FF;
+            color: #4A90E2;
+            border: 1px solid #4A90E2;
+            border-radius: 15px;
+            padding: 5px 12px;
+            font-size: 13px;
+        }
+        
+        .post-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .post-content {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .post-content p {
+            margin-bottom: 15px;
+        }
+        
+        .post-images {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .post-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        
+        .post-image.single {
+            grid-column: span 3;
+            aspect-ratio: 16/9;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .post-tag {
+            background-color: #F2F2F7;
+            color: #666;
+            font-size: 13px;
+            padding: 5px 12px;
+            border-radius: 15px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .post-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 15px;
+            border-top: 1px solid #F0F0F0;
+        }
+        
+        .post-stat {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .post-stat i {
+            margin-right: 6px;
+            font-size: 18px;
+        }
+        
+        .post-stat.liked {
+            color: #FF5252;
+        }
+        
+        .post-stat.liked i {
+            color: #FF5252;
+        }
+        
+        .comments-container {
+            background-color: white;
+            padding: 15px;
+        }
+        
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .comments-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .comments-count {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .comment-item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            margin-right: 12px;
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-author {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .comment-text {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .comment-actions {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .comment-time {
+            margin-right: 15px;
+        }
+        
+        .comment-like {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        
+        .comment-like i {
+            margin-right: 5px;
+        }
+        
+        .comment-reply {
+            display: flex;
+            align-items: center;
+        }
+        
+        .comment-reply i {
+            margin-right: 5px;
+        }
+        
+        .expert-badge {
+            display: inline-block;
+            background-color: #4A90E2;
+            color: white;
+            font-size: 11px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        
+        .official-badge {
+            display: inline-block;
+            background-color: #FF9500;
+            color: white;
+            font-size: 11px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        
+        .nested-comment {
+            background-color: #F8F9FA;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+        
+        .nested-comment-header {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        
+        .nested-comment-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4A90E2;
+        }
+        
+        .nested-comment-text {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .load-more {
+            text-align: center;
+            color: #4A90E2;
+            font-size: 14px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .comment-input-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            padding: 10px 15px;
+            box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        .comment-input {
+            flex: 1;
+            border: 1px solid #E0E0E0;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        .comment-actions-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        .comment-action-button {
+            color: #666;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .send-button {
+            background-color: #4A90E2;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+        }
+        
+        .expert-avatar {
+            position: relative;
+        }
+        
+        .avatar-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #4A90E2;
+            color: white;
+            border-radius: 10px;
+            font-size: 10px;
+            padding: 2px 6px;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../community.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">帖子详情</h1>
+                <a href="#" class="share-button">
+                    <i class="fas fa-share-alt"></i>
+                </a>
+            </div>
+            
+            <!-- 帖子内容 -->
+            <div class="post-container">
+                <div class="post-header">
+                    <div class="expert-avatar">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-author-avatar" alt="张医生">
+                        <span class="avatar-badge">专家</span>
+                    </div>
+                    <div class="post-author-info">
+                        <div class="post-author-name">张志强 主任医师</div>
+                        <div class="post-time">2小时前</div>
+                    </div>
+                    <button class="follow-button">+ 关注</button>
+                </div>
+                
+                <div class="post-title">【专家科普】高血压患者的日常饮食注意事项</div>
+                
+                <div class="post-content">
+                    <p>高血压是一种常见的慢性疾病，合理的饮食对控制血压有着重要的作用。作为长期从事心血管疾病临床工作的医生，我想与大家分享一些高血压患者日常饮食的注意事项：</p>
+                    
+                    <p>1. <strong>减少钠盐摄入</strong>：控制每日食盐摄入量不超过5克，减少加工食品和腌制食品的摄入；</p>
+                    
+                    <p>2. <strong>多食用富含钾的食物</strong>：如香蕉、土豆、冬瓜、西红柿等，钾离子有助于排出体内多余的钠离子；</p>
+                    
+                    <p>3. <strong>保持适当体重</strong>：过高的体重会增加心脏负担，控制总热量摄入，避免高脂肪食物；</p>
+                    
+                    <p>4. <strong>控制饮酒</strong>：过量饮酒会导致血压升高，男性每日酒精摄入不超过25克，女性不超过15克；</p>
+                    
+                    <p>5. <strong>适量运动</strong>：坚持中等强度有氧运动，如快走、游泳等，每周至少150分钟。</p>
+                    
+                    <p>以下是几种适合高血压患者的食谱，大家可以参考尝试...</p>
+                </div>
+                
+                <div class="post-images">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="健康饮食">
+                    <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="血压计">
+                    <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="健康食品">
+                </div>
+                
+                <div class="post-tags">
+                    <span class="post-tag">高血压</span>
+                    <span class="post-tag">健康饮食</span>
+                    <span class="post-tag">专家分享</span>
+                </div>
+                
+                <div class="post-stats">
+                    <div class="post-stat liked">
+                        <i class="fas fa-heart"></i>
+                        <span>238</span>
+                    </div>
+                    <div class="post-stat">
+                        <i class="far fa-comment"></i>
+                        <span>46</span>
+                    </div>
+                    <div class="post-stat">
+                        <i class="far fa-bookmark"></i>
+                        <span>收藏</span>
+                    </div>
+                    <div class="post-stat">
+                        <i class="fas fa-share-alt"></i>
+                        <span>分享</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 评论区域 -->
+            <div class="comments-container">
+                <div class="comments-header">
+                    <div class="comments-title">全部评论</div>
+                    <div class="comments-count">46条</div>
+                </div>
+                
+                <!-- 评论项目1 -->
+                <div class="comment-item">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="comment-avatar" alt="用户头像">
+                    <div class="comment-content">
+                        <div class="comment-author">李女士</div>
+                        <div class="comment-text">谢谢张医生的科普！我父亲是高血压患者，一直在注意饮食，但是对于富含钾的食物不太了解。请问土豆需要怎么烹饪更健康呢？</div>
+                        <div class="comment-actions">
+                            <div class="comment-time">2小时前</div>
+                            <div class="comment-like">
+                                <i class="far fa-heart"></i>
+                                <span>32</span>
+                            </div>
+                            <div class="comment-reply">
+                                <i class="far fa-comment"></i>
+                                <span>回复</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 嵌套回复 -->
+                        <div class="nested-comment">
+                            <div class="nested-comment-header">
+                                <div class="nested-comment-author">张志强 主任医师<span class="expert-badge">专家</span>：</div>
+                            </div>
+                            <div class="nested-comment-text">
+                                您好！建议土豆尽量选择蒸、煮或烤的方式,避免油炸。烹饪时可以适量放些香料提味,减少盐的用量。土豆皮中含有丰富的纤维素和矿物质,如果条件允许可以连皮一起食用。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 评论项目2 -->
+                <div class="comment-item">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="comment-avatar" alt="用户头像">
+                    <div class="comment-content">
+                        <div class="comment-author">王先生</div>
+                        <div class="comment-text">医生您好，我最近血压一直在140/90左右波动，除了注意这些饮食事项，还需要服药控制吗？</div>
+                        <div class="comment-actions">
+                            <div class="comment-time">1小时前</div>
+                            <div class="comment-like">
+                                <i class="far fa-heart"></i>
+                                <span>15</span>
+                            </div>
+                            <div class="comment-reply">
+                                <i class="far fa-comment"></i>
+                                <span>回复</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 评论项目3 -->
+                <div class="comment-item">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="comment-avatar" alt="用户头像">
+                    <div class="comment-content">
+                        <div class="comment-author">陈阿姨</div>
+                        <div class="comment-text">我有高血压十多年了，坚持每天吃降压药，饮食上也很注意。这篇文章说的很实用，我每天都吃香蕉，确实血压控制的很平稳。</div>
+                        <div class="comment-actions">
+                            <div class="comment-time">30分钟前</div>
+                            <div class="comment-like">
+                                <i class="far fa-heart"></i>
+                                <span>8</span>
+                            </div>
+                            <div class="comment-reply">
+                                <i class="far fa-comment"></i>
+                                <span>回复</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 查看更多评论 -->
+                <div class="load-more">
+                    查看更多评论
+                </div>
+            </div>
+            
+            <!-- 评论输入框 -->
+            <div style="height: 60px;"></div>
+            <div class="comment-input-container">
+                <input type="text" class="comment-input" placeholder="发表评论...">
+                <div class="comment-actions-buttons">
+                    <div class="comment-action-button">
+                        <i class="far fa-smile"></i>
+                    </div>
+                    <div class="comment-action-button">
+                        <i class="far fa-image"></i>
+                    </div>
+                    <div class="send-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

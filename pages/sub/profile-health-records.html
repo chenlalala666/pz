@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康档案 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #4A90E2;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .tab-navbar {
+            display: flex;
+            background-color: white;
+            margin-bottom: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 10px;
+            font-size: 15px;
+            color: #666;
+            position: relative;
+        }
+        
+        .tab-item.active {
+            color: #4A90E2;
+            font-weight: 600;
+        }
+        
+        .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background-color: #4A90E2;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .record-card {
+            background-color: white;
+            margin: 0 15px 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        
+        .record-header {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .record-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: #EBF5FF;
+            color: #4A90E2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .record-title {
+            flex: 1;
+        }
+        
+        .record-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .record-meta {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .record-action {
+            color: #4A90E2;
+            font-size: 14px;
+        }
+        
+        .record-content {
+            padding: 15px;
+        }
+        
+        .result-item {
+            margin-bottom: 15px;
+        }
+        
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .result-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            font-size: 16px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-abnormal {
+            color: #FF5252;
+            font-weight: 600;
+        }
+        
+        .result-normal {
+            color: #4CAF50;
+        }
+        
+        .result-warning {
+            color: #FFA726;
+        }
+        
+        .result-indicator {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        
+        .indicator-normal {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+        
+        .indicator-abnormal {
+            background-color: rgba(255, 82, 82, 0.1);
+            color: #FF5252;
+        }
+        
+        .indicator-warning {
+            background-color: rgba(255, 167, 38, 0.1);
+            color: #FFA726;
+        }
+        
+        .record-footer {
+            padding: 12px 15px;
+            background-color: #FAFAFA;
+            border-top: 1px solid #F0F0F0;
+            font-size: 14px;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .hospital-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .hospital-icon {
+            color: #999;
+            margin-right: 6px;
+        }
+        
+        .add-button {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background-color: #4A90E2;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3);
+            font-size: 24px;
+        }
+        
+        .empty-state {
+            padding: 60px 30px;
+            text-align: center;
+            color: #999;
+        }
+        
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #DDD;
+        }
+        
+        .empty-text {
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .empty-action {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background-color: #4A90E2;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .chart-container {
+            padding: 15px;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            font-size: 14px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .chart-placeholder {
+            background-color: #F5F5F5;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .reference-value {
+            font-size: 13px;
+            color: #999;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../profile.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">健康档案</h1>
+            </div>
+            
+            <!-- 标签导航 -->
+            <div class="tab-navbar">
+                <div class="tab-item active">检查报告</div>
+                <div class="tab-item">指标趋势</div>
+                <div class="tab-item">用药记录</div>
+                <div class="tab-item">就诊记录</div>
+            </div>
+            
+            <!-- 体检报告 -->
+            <div class="record-card">
+                <div class="record-header">
+                    <div class="record-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <div class="record-title">
+                        <div class="record-name">年度体检报告</div>
+                        <div class="record-meta">2023-07-18 检查</div>
+                    </div>
+                    <div class="record-action">查看详情</div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-placeholder">指标趋势图表区域</div>
+                </div>
+                
+                <div class="record-content">
+                    <div class="result-item">
+                        <div class="result-label">血压 (mmHg)</div>
+                        <div class="result-value">
+                            128/85
+                            <span class="result-indicator indicator-normal">正常</span>
+                        </div>
+                        <div class="reference-value">参考范围: 90-140/60-90</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">血糖 - 空腹 (mmol/L)</div>
+                        <div class="result-value result-warning">
+                            6.2
+                            <span class="result-indicator indicator-warning">偏高</span>
+                        </div>
+                        <div class="reference-value">参考范围: 3.9-6.1</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">体重指数 BMI (kg/m²)</div>
+                        <div class="result-value">
+                            23.5
+                            <span class="result-indicator indicator-normal">正常</span>
+                        </div>
+                        <div class="reference-value">参考范围: 18.5-24.9</div>
+                    </div>
+                </div>
+                
+                <div class="record-footer">
+                    <div class="hospital-info">
+                        <div class="hospital-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div>北京协和医院体检中心</div>
+                    </div>
+                    <div>
+                        <i class="far fa-share-square"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 心电图报告 -->
+            <div class="record-card">
+                <div class="record-header">
+                    <div class="record-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="record-title">
+                        <div class="record-name">心电图</div>
+                        <div class="record-meta">2023-04-05 检查</div>
+                    </div>
+                    <div class="record-action">查看详情</div>
+                </div>
+                
+                <div class="record-content">
+                    <div class="result-item">
+                        <div class="result-label">心律</div>
+                        <div class="result-value">
+                            窦性心律
+                            <span class="result-indicator indicator-normal">正常</span>
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">心率 (次/分)</div>
+                        <div class="result-value">
+                            75
+                            <span class="result-indicator indicator-normal">正常</span>
+                        </div>
+                        <div class="reference-value">参考范围: 60-100</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">医生建议</div>
+                        <div class="result-value">心电图结果正常，建议保持良好生活习惯，定期复查。</div>
+                    </div>
+                </div>
+                
+                <div class="record-footer">
+                    <div class="hospital-info">
+                        <div class="hospital-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div>北京大学第三医院</div>
+                    </div>
+                    <div>
+                        <i class="far fa-share-square"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 血常规报告 -->
+            <div class="record-card">
+                <div class="record-header">
+                    <div class="record-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="record-title">
+                        <div class="record-name">血常规</div>
+                        <div class="record-meta">2023-05-22 检查</div>
+                    </div>
+                    <div class="record-action">查看详情</div>
+                </div>
+                
+                <div class="record-content">
+                    <div class="result-item">
+                        <div class="result-label">血红蛋白 (g/L)</div>
+                        <div class="result-value">
+                            132
+                            <span class="result-indicator indicator-normal">正常</span>
+                        </div>
+                        <div class="reference-value">参考范围: 115-150</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">白细胞计数 (×10^9/L)</div>
+                        <div class="result-value">
+                            6.8
+                            <span class="result-indicator indicator-normal">正常</span>
+                        </div>
+                        <div class="reference-value">参考范围: 4.0-10.0</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">血小板计数 (×10^9/L)</div>
+                        <div class="result-value result-abnormal">
+                            380
+                            <span class="result-indicator indicator-abnormal">偏高</span>
+                        </div>
+                        <div class="reference-value">参考范围: 100-300</div>
+                    </div>
+                </div>
+                
+                <div class="record-footer">
+                    <div class="hospital-info">
+                        <div class="hospital-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div>首都医科大学附属北京朝阳医院</div>
+                    </div>
+                    <div>
+                        <i class="far fa-share-square"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 添加记录按钮 -->
+            <a href="#" class="add-button">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

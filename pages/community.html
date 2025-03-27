@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陪诊APP - 社区</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .search-bar {
+            background-color: #F2F2F7;
+            border-radius: 10px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            margin: 10px 16px;
+        }
+        
+        .search-bar i {
+            color: #8E8E93;
+            margin-right: 10px;
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            flex: 1;
+            padding: 0;
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .topic-tabs {
+            display: flex;
+            overflow-x: auto;
+            padding: 5px 16px 15px;
+            margin-bottom: 10px;
+            background-color: white;
+            scrollbar-width: none;
+        }
+        
+        .topic-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .topic-tab {
+            padding: 8px 16px;
+            margin-right: 10px;
+            white-space: nowrap;
+            background-color: #F0F0F0;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .topic-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .post-list {
+            padding: 0 16px;
+        }
+        
+        .post-card {
+            background-color: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .post-author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+        
+        .post-author-info {
+            flex: 1;
+        }
+        
+        .post-author-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .post-time {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .post-actions {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .post-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .post-content {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .post-images {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .post-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .post-tag {
+            background-color: #F2F2F7;
+            color: #666;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 15px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .post-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 12px;
+            border-top: 1px solid #F0F0F0;
+        }
+        
+        .post-stat {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .post-stat i {
+            margin-right: 5px;
+        }
+        
+        .post-stat.liked {
+            color: #FF5252;
+        }
+        
+        .post-stat.liked i {
+            color: #FF5252;
+        }
+        
+        .floating-button {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            z-index: 100;
+        }
+        
+        .expert-avatar {
+            position: relative;
+        }
+        
+        .expert-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            font-size: 10px;
+            padding: 2px 6px;
+            border: 2px solid white;
+        }
+        
+        .comment-preview {
+            background-color: #F5F5F5;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .comment-author {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面标题栏 -->
+            <div class="header">
+                <div class="header-left"></div>
+                <div class="header-title">健康社区</div>
+                <div class="header-right">
+                    <i class="fas fa-bell"></i>
+                </div>
+            </div>
+            
+            <!-- 搜索栏 -->
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索话题、问题或关键词">
+            </div>
+            
+            <!-- 话题标签 -->
+            <div class="topic-tabs">
+                <div class="topic-tab active">推荐</div>
+                <div class="topic-tab">热门</div>
+                <div class="topic-tab">医疗资讯</div>
+                <div class="topic-tab">专家问答</div>
+                <div class="topic-tab">经验分享</div>
+                <div class="topic-tab">照护技巧</div>
+                <div class="topic-tab">健康饮食</div>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <div class="content">
+                <div class="post-list">
+                    <!-- 专家帖子 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="expert-avatar">
+                                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-author-avatar" alt="张医生">
+                                <span class="expert-badge">专家</span>
+                            </div>
+                            <div class="post-author-info">
+                                <div class="post-author-name">张志强 主任医师</div>
+                                <div class="post-time">2小时前</div>
+                            </div>
+                            <div class="post-actions">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                        </div>
+                        <div class="post-title">【专家科普】高血压患者的日常饮食注意事项</div>
+                        <div class="post-content">高血压是常见的慢性疾病，合理饮食对控制血压很重要。建议：1.减少钠盐摄入；2.多食用富含钾的食物；3.保持适当体重；4.控制饮酒；5.适量运动。以下是几种适合高血压患者的食谱...</div>
+                        <div class="post-images">
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="健康饮食">
+                            <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="血压计">
+                            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="健康食品">
+                        </div>
+                        <div class="post-tags">
+                            <span class="post-tag">高血压</span>
+                            <span class="post-tag">健康饮食</span>
+                            <span class="post-tag">专家分享</span>
+                        </div>
+                        <div class="post-stats">
+                            <div class="post-stat liked">
+                                <i class="fas fa-heart"></i>
+                                <span>238</span>
+                            </div>
+                            <div class="post-stat">
+                                <i class="far fa-comment"></i>
+                                <span>46</span>
+                            </div>
+                            <div class="post-stat">
+                                <i class="far fa-bookmark"></i>
+                                <span>收藏</span>
+                            </div>
+                            <div class="post-stat">
+                                <i class="fas fa-share-alt"></i>
+                                <span>分享</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 用户帖子 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <img src="https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-author-avatar" alt="李女士">
+                            <div class="post-author-info">
+                                <div class="post-author-name">李女士</div>
+                                <div class="post-time">昨天 14:25</div>
+                            </div>
+                            <div class="post-actions">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                        </div>
+                        <div class="post-title">第一次陪妈妈看病的经验分享</div>
+                        <div class="post-content">我妈妈今年68岁，最近腰腿疼，今天带她去了协和医院骨科看诊。提前一个星期在APP上预约了陪诊服务，真的特别方便！陪诊员小杨很专业，帮我们挂号、排队，还帮忙记录医嘱。感谢这个平台，真心推荐给有老人的家庭！</div>
+                        <div class="post-images">
+                            <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-image" alt="医院走廊">
+                        </div>
+                        <div class="comment-preview">
+                            <span class="comment-author">陈阿姨：</span>我也在这个平台找陪诊，服务很贴心，推荐！
+                        </div>
+                        <div class="post-tags">
+                            <span class="post-tag">陪诊体验</span>
+                            <span class="post-tag">协和医院</span>
+                            <span class="post-tag">老年人就医</span>
+                        </div>
+                        <div class="post-stats">
+                            <div class="post-stat">
+                                <i class="far fa-heart"></i>
+                                <span>89</span>
+                            </div>
+                            <div class="post-stat">
+                                <i class="far fa-comment"></i>
+                                <span>12</span>
+                            </div>
+                            <div class="post-stat">
+                                <i class="far fa-bookmark"></i>
+                                <span>收藏</span>
+                            </div>
+                            <div class="post-stat">
+                                <i class="fas fa-share-alt"></i>
+                                <span>分享</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 提问帖子 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="post-author-avatar" alt="王先生">
+                            <div class="post-author-info">
+                                <div class="post-author-name">王先生</div>
+                                <div class="post-time">3天前</div>
+                            </div>
+                            <div class="post-actions">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                        </div>
+                        <div class="post-title">【求助】父亲需要做心脏搭桥手术，哪家医院更专业？</div>
+                        <div class="post-content">我父亲今年72岁，最近检查出三支冠脉严重狭窄，医生建议做冠状动脉搭桥手术。想咨询下北京地区哪家医院的心外科比较好？有没有陪护经验的朋友可以分享一下术后照顾经验？谢谢大家！</div>
+                        <div class="post-tags">
+                            <span class="post-tag">心脏搭桥</span>
+                            <span class="post-tag">医院推荐</span>
+                            <span class="post-tag">术后照顾</span>
+                            <span class="post-tag">求助</span>
+                        </div>
+                        <div class="post-stats">
+                            <div class="post-stat">
+                                <i class="far fa-heart"></i>
+                                <span>45</span>
+                            </div>
+                            <div class="post-stat">
+                                <i class="far fa-comment"></i>
+                                <span>31</span>
+                            </div>
+                            <div class="post-stat">
+                                <i class="far fa-bookmark"></i>
+                                <span>收藏</span>
+                            </div>
+                            <div class="post-stat">
+                                <i class="fas fa-share-alt"></i>
+                                <span>分享</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 悬浮发帖按钮 -->
+            <div class="floating-button">
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <a href="home.html" class="tab-item">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="orders.html" class="tab-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>订单</span>
+            </a>
+            <a href="community.html" class="tab-item active">
+                <i class="fas fa-users"></i>
+                <span>社区</span>
+            </a>
+            <a href="profile.html" class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

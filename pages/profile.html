@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陪诊APP - 我的</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-header {
+            background-color: white;
+            padding: 20px 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 40px;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .profile-id {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .profile-edit {
+            border: 1px solid #E0E0E0;
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 14px;
+            color: #666;
+            display: inline-block;
+        }
+        
+        .profile-edit i {
+            margin-right: 5px;
+        }
+        
+        .stats-row {
+            display: flex;
+            background-color: white;
+            padding: 10px 0;
+            margin-bottom: 10px;
+            border-top: 1px solid #F0F0F0;
+        }
+        
+        .stat-item {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .menu-section {
+            background-color: white;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .menu-section-title {
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item-icon {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #F0F0F0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            color: var(--primary-color);
+        }
+        
+        .menu-item-title {
+            flex: 1;
+            font-size: 16px;
+        }
+        
+        .menu-item-arrow {
+            color: #C8C8C8;
+        }
+        
+        .badge-wrap {
+            position: relative;
+        }
+        
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            background-color: #FF3B30;
+            color: white;
+            font-size: 12px;
+            line-height: 18px;
+            text-align: center;
+            padding: 0 6px;
+        }
+        
+        .vip-card {
+            background: linear-gradient(135deg, #7B68EE, #4A90E2);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px;
+            color: white;
+        }
+        
+        .vip-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .vip-title-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .vip-card-icon {
+            font-size: 24px;
+        }
+        
+        .vip-benefits {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .vip-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+            border-radius: 20px;
+            padding: 5px 12px;
+            color: white;
+            font-size: 12px;
+            display: inline-block;
+        }
+        
+        .health-records {
+            background-color: white;
+            margin: 0 15px 15px;
+            border-radius: 12px;
+            padding: 15px;
+        }
+        
+        .health-records-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .health-records-more {
+            font-size: 14px;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .record-list {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            margin: 0 -15px;
+            padding: 0 15px;
+        }
+        
+        .record-list::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .record-item {
+            min-width: 120px;
+            margin-right: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .record-item-header {
+            background-color: #EBF5FF;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .record-item-content {
+            padding: 10px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .record-date {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面标题栏 -->
+            <div class="header">
+                <div class="header-left"></div>
+                <div class="header-title">我的</div>
+                <div class="header-right">
+                    <i class="fas fa-cog"></i>
+                </div>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <div class="content">
+                <!-- 个人信息 -->
+                <div class="profile-header">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="profile-avatar" alt="用户头像">
+                    <div class="profile-info">
+                        <div class="profile-name">张晓红</div>
+                        <div class="profile-id">ID: 9876543</div>
+                        <div class="profile-edit">
+                            <i class="fas fa-edit"></i> 编辑资料
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 数据统计 -->
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">陪诊次数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">健康报告</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">238</div>
+                        <div class="stat-label">社区积分</div>
+                    </div>
+                </div>
+                
+                <!-- VIP会员卡 -->
+                <div class="vip-card">
+                    <div class="vip-title">
+                        <div class="vip-title-text">健康守护 VIP</div>
+                        <div class="vip-card-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                    </div>
+                    <div class="vip-benefits">
+                        尊享三甲医院挂号、专家门诊预约特权
+                    </div>
+                    <div class="vip-button">立即开通</div>
+                </div>
+                
+                <!-- 健康档案 -->
+                <div class="health-records">
+                    <div class="health-records-title">
+                        <span>健康档案</span>
+                        <a href="#" class="health-records-more">查看全部</a>
+                    </div>
+                    <div class="record-list">
+                        <div class="record-item">
+                            <div class="record-item-header">体检报告</div>
+                            <div class="record-item-content">
+                                年度体检结果正常
+                                <div class="record-date">2023-07-18</div>
+                            </div>
+                        </div>
+                        <div class="record-item">
+                            <div class="record-item-header">心电图</div>
+                            <div class="record-item-content">
+                                窦性心律正常
+                                <div class="record-date">2023-04-05</div>
+                            </div>
+                        </div>
+                        <div class="record-item">
+                            <div class="record-item-header">血常规</div>
+                            <div class="record-item-content">
+                                血糖略偏高
+                                <div class="record-date">2023-05-22</div>
+                            </div>
+                        </div>
+                        <div class="record-item">
+                            <div class="record-item-header">肝功能</div>
+                            <div class="record-item-content">
+                                各项指标正常
+                                <div class="record-date">2023-05-22</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 菜单列表 -->
+                <div class="menu-section">
+                    <div class="menu-item">
+                        <div class="menu-item-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="menu-item-title">我的收藏</div>
+                        <div class="menu-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-icon">
+                            <i class="fas fa-comment-dots"></i>
+                        </div>
+                        <div class="menu-item-title">我的评价</div>
+                        <div class="menu-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-icon badge-wrap">
+                            <i class="fas fa-envelope"></i>
+                            <span class="badge">2</span>
+                        </div>
+                        <div class="menu-item-title">我的消息</div>
+                        <div class="menu-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-item">
+                        <div class="menu-item-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="menu-item-title">我的钱包</div>
+                        <div class="menu-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div class="menu-item-title">优惠券</div>
+                        <div class="menu-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="menu-item-title">邀请好友</div>
+                        <div class="menu-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-item">
+                        <div class="menu-item-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="menu-item-title">联系客服</div>
+                        <div class="menu-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="menu-item-title">帮助中心</div>
+                        <div class="menu-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="menu-item-title">隐私设置</div>
+                        <div class="menu-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <a href="home.html" class="tab-item">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="orders.html" class="tab-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>订单</span>
+            </a>
+            <a href="community.html" class="tab-item">
+                <i class="fas fa-users"></i>
+                <span>社区</span>
+            </a>
+            <a href="profile.html" class="tab-item active">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

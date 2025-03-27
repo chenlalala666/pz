@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布帖子 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #4A90E2;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .publish-button {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: white;
+            color: #4A90E2;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .editor-container {
+            background-color: white;
+            padding: 15px;
+        }
+        
+        .post-type-selector {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #F0F0F0;
+            padding-bottom: 10px;
+        }
+        
+        .post-type {
+            padding: 8px 15px;
+            margin-right: 10px;
+            font-size: 14px;
+            color: #666;
+            border-radius: 15px;
+            background-color: #F5F5F5;
+            cursor: pointer;
+        }
+        
+        .post-type.active {
+            background-color: #4A90E2;
+            color: white;
+        }
+        
+        .title-input {
+            width: 100%;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding: 5px 0;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .title-input::placeholder {
+            color: #999;
+            font-weight: 400;
+        }
+        
+        .content-input {
+            width: 100%;
+            border: none;
+            font-size: 16px;
+            min-height: 150px;
+            resize: none;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .content-input::placeholder {
+            color: #999;
+        }
+        
+        .image-upload-container {
+            margin-bottom: 20px;
+        }
+        
+        .image-upload-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .image-item {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            background-color: #F5F5F5;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            color: #999;
+            font-size: 24px;
+            border: 1px dashed #CCC;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .preview-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .delete-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 22px;
+            height: 22px;
+            border-radius: 11px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .tag-section {
+            margin-bottom: 20px;
+        }
+        
+        .tag-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tag-counter {
+            font-size: 13px;
+            color: #999;
+            font-weight: 400;
+        }
+        
+        .tag-options {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .tag-option {
+            padding: 6px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+            border-radius: 15px;
+            background-color: #F5F5F5;
+            cursor: pointer;
+        }
+        
+        .tag-option.selected {
+            background-color: #EBF5FF;
+            color: #4A90E2;
+            border: 1px solid #4A90E2;
+        }
+        
+        .option-section {
+            margin-bottom: 20px;
+        }
+        
+        .option-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .option-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .option-label {
+            font-size: 15px;
+            color: #333;
+        }
+        
+        .option-value {
+            font-size: 15px;
+            color: #999;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option-value i {
+            margin-left: 5px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 45px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #CCC;
+            border-radius: 24px;
+            transition: .4s;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: .4s;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #4A90E2;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(21px);
+        }
+        
+        .topic-selector {
+            background-color: #F8F9FA;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .topic-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .topic-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            background-color: #4A90E2;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            margin-right: 8px;
+        }
+        
+        .topic-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+        
+        .topic-change {
+            color: #4A90E2;
+            font-size: 14px;
+        }
+        
+        .topic-description {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .editor-toolbar {
+            display: flex;
+            padding: 10px 15px;
+            border-top: 1px solid #F0F0F0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .editor-toolbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .toolbar-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
+            color: #666;
+        }
+        
+        .toolbar-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .toolbar-label {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../community.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">发布帖子</h1>
+                <button class="publish-button">发布</button>
+            </div>
+            
+            <!-- 编辑器区域 -->
+            <div class="editor-container">
+                <!-- 帖子类型选择 -->
+                <div class="post-type-selector">
+                    <div class="post-type active">分享经验</div>
+                    <div class="post-type">提问</div>
+                    <div class="post-type">寻求推荐</div>
+                </div>
+                
+                <!-- 主题选择 -->
+                <div class="topic-selector">
+                    <div class="topic-header">
+                        <div class="topic-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="topic-title">健康饮食</div>
+                        <div class="topic-change">更换</div>
+                    </div>
+                    <div class="topic-description">
+                        分享健康饮食心得，营养搭配建议，特殊人群饮食指导等内容。
+                    </div>
+                </div>
+                
+                <!-- 标题输入 -->
+                <input type="text" class="title-input" placeholder="请输入标题（15-30字）">
+                
+                <!-- 内容输入 -->
+                <textarea class="content-input" placeholder="分享您的经验、问题或观点..."></textarea>
+                
+                <!-- 图片上传 -->
+                <div class="image-upload-container">
+                    <div class="image-upload-title">添加图片（0/9）</div>
+                    <div class="image-grid">
+                        <div class="image-item">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                        <div class="image-item">
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="preview-image" alt="预览图片">
+                            <div class="delete-image">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <div class="image-item">
+                            <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="preview-image" alt="预览图片">
+                            <div class="delete-image">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 标签选择 -->
+                <div class="tag-section">
+                    <div class="tag-title">
+                        添加标签
+                        <span class="tag-counter">2/5</span>
+                    </div>
+                    <div class="tag-options">
+                        <div class="tag-option selected">健康饮食</div>
+                        <div class="tag-option selected">高血压</div>
+                        <div class="tag-option">心脏健康</div>
+                        <div class="tag-option">慢性病管理</div>
+                        <div class="tag-option">老年保健</div>
+                        <div class="tag-option">营养搭配</div>
+                        <div class="tag-option">减盐饮食</div>
+                    </div>
+                </div>
+                
+                <!-- 发布选项 -->
+                <div class="option-section">
+                    <div class="option-title">更多设置</div>
+                    
+                    <div class="option-row">
+                        <div class="option-label">显示位置信息</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="option-row">
+                        <div class="option-label">允许转载</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="option-row">
+                        <div class="option-label">谁可以看</div>
+                        <div class="option-value">
+                            所有人 <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 编辑器工具栏 -->
+            <div class="editor-toolbar">
+                <div class="toolbar-button">
+                    <div class="toolbar-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="toolbar-label">图片</div>
+                </div>
+                
+                <div class="toolbar-button">
+                    <div class="toolbar-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div class="toolbar-label">链接</div>
+                </div>
+                
+                <div class="toolbar-button">
+                    <div class="toolbar-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <div class="toolbar-label">话题</div>
+                </div>
+                
+                <div class="toolbar-button">
+                    <div class="toolbar-icon">
+                        <i class="fas fa-at"></i>
+                    </div>
+                    <div class="toolbar-label">提及</div>
+                </div>
+                
+                <div class="toolbar-button">
+                    <div class="toolbar-icon">
+                        <i class="far fa-smile"></i>
+                    </div>
+                    <div class="toolbar-label">表情</div>
+                </div>
+                
+                <div class="toolbar-button">
+                    <div class="toolbar-icon">
+                        <i class="fas fa-bold"></i>
+                    </div>
+                    <div class="toolbar-label">加粗</div>
+                </div>
+                
+                <div class="toolbar-button">
+                    <div class="toolbar-icon">
+                        <i class="fas fa-list-ul"></i>
+                    </div>
+                    <div class="toolbar-label">列表</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

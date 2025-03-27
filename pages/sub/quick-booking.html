@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速预约 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #4A90E2;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 15px 16px 10px;
+            color: #333;
+        }
+        
+        .booking-form {
+            background-color: white;
+            border-radius: 12px;
+            margin: 0 16px 20px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            box-sizing: border-box;
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 14px;
+            min-height: 100px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .form-checkbox input {
+            margin-right: 8px;
+        }
+        
+        .form-checkbox label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .available-slots {
+            margin: 0 16px 20px;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .time-slot {
+            text-align: center;
+            background-color: #F5F5F5;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .time-slot.available {
+            background-color: #EBF5FF;
+            color: #4A90E2;
+            border: 1px solid #4A90E2;
+        }
+        
+        .time-slot.selected {
+            background-color: #4A90E2;
+            color: white;
+        }
+        
+        .recommended-services {
+            margin: 0 16px 20px;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            overflow: hidden;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .service-info {
+            flex: 1;
+        }
+        
+        .service-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .service-desc {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .service-price {
+            font-size: 15px;
+            font-weight: 600;
+            color: #FF6B6B;
+        }
+        
+        .book-now {
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 6px 12px;
+            font-size: 13px;
+            float: right;
+            margin-top: -25px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 16px 15px;
+        }
+        
+        .calendar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .calendar-navigation {
+            display: flex;
+        }
+        
+        .calendar-nav-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #F5F5F5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            margin-left: 8px;
+        }
+        
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            margin: 0 16px 15px;
+        }
+        
+        .calendar-day-name {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            padding: 5px;
+        }
+        
+        .calendar-day {
+            text-align: center;
+            padding: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .calendar-day.disabled {
+            color: #CCC;
+        }
+        
+        .calendar-day.today {
+            background-color: #EBF5FF;
+            border-radius: 50%;
+            color: #4A90E2;
+        }
+        
+        .calendar-day.selected {
+            background-color: #4A90E2;
+            border-radius: 50%;
+            color: white;
+        }
+        
+        .blue-bg {
+            background-color: #4A90E2;
+        }
+        
+        .orange-bg {
+            background-color: #FF9500;
+        }
+        
+        .purple-bg {
+            background-color: #9C6ADE;
+        }
+        
+        .green-bg {
+            background-color: #00C9A7;
+        }
+        
+        .hospital-selection {
+            margin: 0 16px 20px;
+        }
+        
+        .hospital-cards {
+            display: flex;
+            overflow-x: auto;
+            padding: 5px 0;
+            scrollbar-width: none;
+        }
+        
+        .hospital-cards::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .hospital-card {
+            min-width: 150px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 12px;
+            margin-right: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .hospital-card.selected {
+            border: 2px solid #4A90E2;
+        }
+        
+        .hospital-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .hospital-type {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .hospital-address {
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../home.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">快速预约</h1>
+            </div>
+            
+            <!-- 选择日期 -->
+            <div class="calendar-header">
+                <div class="calendar-title">选择日期</div>
+                <div class="calendar-navigation">
+                    <div class="calendar-nav-button">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="calendar-nav-button">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calendar-days">
+                <div class="calendar-day-name">日</div>
+                <div class="calendar-day-name">一</div>
+                <div class="calendar-day-name">二</div>
+                <div class="calendar-day-name">三</div>
+                <div class="calendar-day-name">四</div>
+                <div class="calendar-day-name">五</div>
+                <div class="calendar-day-name">六</div>
+                
+                <div class="calendar-day disabled">30</div>
+                <div class="calendar-day disabled">31</div>
+                <div class="calendar-day">1</div>
+                <div class="calendar-day">2</div>
+                <div class="calendar-day">3</div>
+                <div class="calendar-day">4</div>
+                <div class="calendar-day">5</div>
+                
+                <div class="calendar-day">6</div>
+                <div class="calendar-day">7</div>
+                <div class="calendar-day">8</div>
+                <div class="calendar-day">9</div>
+                <div class="calendar-day today">10</div>
+                <div class="calendar-day">11</div>
+                <div class="calendar-day">12</div>
+                
+                <div class="calendar-day">13</div>
+                <div class="calendar-day">14</div>
+                <div class="calendar-day selected">15</div>
+                <div class="calendar-day">16</div>
+                <div class="calendar-day">17</div>
+                <div class="calendar-day">18</div>
+                <div class="calendar-day">19</div>
+            </div>
+            
+            <!-- 可用时间段 -->
+            <h2 class="section-title">选择时间</h2>
+            <div class="available-slots">
+                <div class="time-slots">
+                    <div class="time-slot">8:00</div>
+                    <div class="time-slot">8:30</div>
+                    <div class="time-slot available">9:00</div>
+                    <div class="time-slot available">9:30</div>
+                    <div class="time-slot">10:00</div>
+                    <div class="time-slot available">10:30</div>
+                    <div class="time-slot selected">11:00</div>
+                    <div class="time-slot available">11:30</div>
+                    <div class="time-slot">14:00</div>
+                    <div class="time-slot available">14:30</div>
+                    <div class="time-slot available">15:00</div>
+                    <div class="time-slot">15:30</div>
+                </div>
+            </div>
+            
+            <!-- 选择医院 -->
+            <h2 class="section-title">选择医院</h2>
+            <div class="hospital-selection">
+                <div class="hospital-cards">
+                    <div class="hospital-card">
+                        <div class="hospital-name">北京协和医院</div>
+                        <div class="hospital-type">三甲综合医院</div>
+                        <div class="hospital-address">东城区帅府园1号</div>
+                    </div>
+                    
+                    <div class="hospital-card selected">
+                        <div class="hospital-name">北京大学第一医院</div>
+                        <div class="hospital-type">三甲综合医院</div>
+                        <div class="hospital-address">西城区西什库大街8号</div>
+                    </div>
+                    
+                    <div class="hospital-card">
+                        <div class="hospital-name">北京友谊医院</div>
+                        <div class="hospital-type">三甲综合医院</div>
+                        <div class="hospital-address">西城区永安路95号</div>
+                    </div>
+                    
+                    <div class="hospital-card">
+                        <div class="hospital-name">北京天坛医院</div>
+                        <div class="hospital-type">三甲专科医院</div>
+                        <div class="hospital-address">丰台区南四环西路119号</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 预约表单 -->
+            <h2 class="section-title">填写预约信息</h2>
+            <form class="booking-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">姓名</label>
+                        <input type="text" class="form-input" placeholder="请输入姓名">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">手机号码</label>
+                        <input type="tel" class="form-input" placeholder="请输入手机号码">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">服务类型</label>
+                    <select class="form-select">
+                        <option value="" disabled selected>请选择服务类型</option>
+                        <option value="full">全程陪诊</option>
+                        <option value="in_hospital">院内陪诊</option>
+                        <option value="inquiry">代办问诊</option>
+                        <option value="medicine">代办买药</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">科室选择</label>
+                    <select class="form-select">
+                        <option value="" disabled selected>请选择就诊科室</option>
+                        <option value="internal">内科</option>
+                        <option value="surgery">外科</option>
+                        <option value="gynecology">妇产科</option>
+                        <option value="pediatrics">儿科</option>
+                        <option value="dermatology">皮肤科</option>
+                        <option value="neurology">神经科</option>
+                        <option value="ophthalmology">眼科</option>
+                        <option value="ent">耳鼻喉科</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">需求描述</label>
+                    <textarea class="form-textarea" placeholder="请描述您的就医需求或健康问题..."></textarea>
+                </div>
+                
+                <div class="form-checkbox">
+                    <input type="checkbox" id="policy-agreement">
+                    <label for="policy-agreement">我已阅读并同意《服务条款》和《隐私政策》</label>
+                </div>
+                
+                <button type="submit" class="submit-button">提交预约</button>
+            </form>
+            
+            <!-- 推荐服务 -->
+            <h2 class="section-title">推荐服务</h2>
+            <div class="recommended-services">
+                <div class="service-card">
+                    <div class="service-icon blue-bg">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="service-info">
+                        <div class="service-title">专家门诊陪诊</div>
+                        <div class="service-desc">医学专业人员全程陪同就诊，提供专业病情解读和就医建议</div>
+                        <div class="service-price">¥200/次起</div>
+                        <button class="book-now">立即预约</button>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon orange-bg">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="service-info">
+                        <div class="service-title">长者就医陪护</div>
+                        <div class="service-desc">专业陪诊员陪伴老年人就医，照顾全程需求，解决就医困难</div>
+                        <div class="service-price">¥180/次起</div>
+                        <button class="book-now">立即预约</button>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon purple-bg">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <div class="service-info">
+                        <div class="service-title">体检陪同服务</div>
+                        <div class="service-desc">专业人员全程陪同体检，指导体检流程，解读体检报告</div>
+                        <div class="service-price">¥150/次起</div>
+                        <button class="book-now">立即预约</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <a href="../home.html" class="tab-item active">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="../orders.html" class="tab-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>订单</span>
+            </a>
+            <a href="../community.html" class="tab-item">
+                <i class="fas fa-users"></i>
+                <span>社区</span>
+            </a>
+            <a href="../profile.html" class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陪诊APP - 订单</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tab-menu {
+            display: flex;
+            border-bottom: 1px solid #E0E0E0;
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .tab-menu-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 15px;
+            color: #666;
+            position: relative;
+        }
+        
+        .tab-menu-item.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .tab-menu-item.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .order-list {
+            padding: 15px;
+        }
+        
+        .order-card {
+            background-color: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .order-header {
+            padding: 12px 15px;
+            border-bottom: 1px solid #F0F0F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .order-number {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .order-status {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .order-status.pending {
+            color: #FA9D3B;
+        }
+        
+        .order-status.ongoing {
+            color: var(--primary-color);
+        }
+        
+        .order-status.completed {
+            color: var(--success-color);
+        }
+        
+        .order-status.cancelled {
+            color: #FF3B30;
+        }
+        
+        .order-content {
+            padding: 15px;
+            display: flex;
+        }
+        
+        .order-hospital-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #EBF5FF;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-right: 15px;
+        }
+        
+        .order-details {
+            flex: 1;
+        }
+        
+        .order-hospital {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .order-service {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .order-time {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .order-footer {
+            padding: 12px 15px;
+            border-top: 1px solid #F0F0F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .order-price {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FF5722;
+        }
+        
+        .order-actions {
+            display: flex;
+        }
+        
+        .order-btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-left: 10px;
+            border: 1px solid #ccc;
+            background-color: white;
+            color: #666;
+        }
+        
+        .order-btn.primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .empty-orders {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            color: #999;
+        }
+        
+        .empty-orders i {
+            font-size: 60px;
+            color: #E0E0E0;
+            margin-bottom: 20px;
+        }
+        
+        .empty-orders p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .empty-orders .btn {
+            max-width: 200px;
+        }
+        
+        .order-personnel {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .personnel-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            margin-right: 10px;
+        }
+        
+        .personnel-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面标题栏 -->
+            <div class="header">
+                <div class="header-left"></div>
+                <div class="header-title">我的订单</div>
+                <div class="header-right"></div>
+            </div>
+            
+            <!-- 状态标签 -->
+            <div class="tab-menu">
+                <div class="tab-menu-item active">全部</div>
+                <div class="tab-menu-item">待支付</div>
+                <div class="tab-menu-item">进行中</div>
+                <div class="tab-menu-item">已完成</div>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <div class="content">
+                <div class="order-list">
+                    <!-- 进行中订单 -->
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-number">订单号: 202309150001</div>
+                            <div class="order-status ongoing">进行中</div>
+                        </div>
+                        <div class="order-content">
+                            <div class="order-hospital-icon">
+                                <i class="fas fa-hospital-user"></i>
+                            </div>
+                            <div class="order-details">
+                                <div class="order-hospital">北京协和医院</div>
+                                <div class="order-service">门诊陪诊 - 内科</div>
+                                <div class="order-time">2023-09-15 09:30</div>
+                                <div class="order-personnel">
+                                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="personnel-avatar" alt="陪诊员">
+                                    <span class="personnel-name">陈阿姨 | 5年经验</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-footer">
+                            <div class="order-price">¥398.00</div>
+                            <div class="order-actions">
+                                <button class="order-btn">联系客服</button>
+                                <button class="order-btn primary">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 待支付订单 -->
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-number">订单号: 202309200002</div>
+                            <div class="order-status pending">待支付</div>
+                        </div>
+                        <div class="order-content">
+                            <div class="order-hospital-icon">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="order-details">
+                                <div class="order-hospital">北京大学第三医院</div>
+                                <div class="order-service">专家门诊预约 - 骨科</div>
+                                <div class="order-time">2023-09-20 14:00</div>
+                            </div>
+                        </div>
+                        <div class="order-footer">
+                            <div class="order-price">¥268.00</div>
+                            <div class="order-actions">
+                                <button class="order-btn">取消订单</button>
+                                <button class="order-btn primary">立即支付</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 已完成订单 -->
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-number">订单号: 202309050003</div>
+                            <div class="order-status completed">已完成</div>
+                        </div>
+                        <div class="order-content">
+                            <div class="order-hospital-icon">
+                                <i class="fas fa-file-medical"></i>
+                            </div>
+                            <div class="order-details">
+                                <div class="order-hospital">首都医科大学附属北京朝阳医院</div>
+                                <div class="order-service">报告解读 - 心脏彩超</div>
+                                <div class="order-time">2023-09-05 16:30</div>
+                                <div class="order-personnel">
+                                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="personnel-avatar" alt="医生">
+                                    <span class="personnel-name">刘医生 | 副主任医师</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-footer">
+                            <div class="order-price">¥199.00</div>
+                            <div class="order-actions">
+                                <button class="order-btn">查看报告</button>
+                                <button class="order-btn primary">评价</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 已取消订单 -->
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-number">订单号: 202308280004</div>
+                            <div class="order-status cancelled">已取消</div>
+                        </div>
+                        <div class="order-content">
+                            <div class="order-hospital-icon">
+                                <i class="fas fa-pills"></i>
+                            </div>
+                            <div class="order-details">
+                                <div class="order-hospital">北京中医药大学东方医院</div>
+                                <div class="order-service">取药陪护</div>
+                                <div class="order-time">2023-08-28 10:00</div>
+                            </div>
+                        </div>
+                        <div class="order-footer">
+                            <div class="order-price">¥98.00</div>
+                            <div class="order-actions">
+                                <button class="order-btn">删除订单</button>
+                                <button class="order-btn primary">再次预约</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <a href="home.html" class="tab-item">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="orders.html" class="tab-item active">
+                <i class="fas fa-clipboard-list"></i>
+                <span>订单</span>
+            </a>
+            <a href="community.html" class="tab-item">
+                <i class="fas fa-users"></i>
+                <span>社区</span>
+            </a>
+            <a href="profile.html" class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

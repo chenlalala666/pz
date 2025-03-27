@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代办问诊服务 - 二级页面</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header {
+            background-color: #F8E8FF;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 15px 16px 10px;
+            color: #333;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 12px;
+            margin: 0 16px 15px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .service-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .service-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #F8E8FF;
+            color: #9C6ADE;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .service-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .service-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .benefits-list {
+            margin: 10px 0 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .benefit-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            background-color: #F8E8FF;
+            color: #9C6ADE;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        
+        .benefit-text {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .how-it-works {
+            margin: 0 16px 20px;
+        }
+        
+        .step-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #9C6ADE;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .step-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 0 16px 20px;
+        }
+        
+        .service-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .service-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #F8E8FF;
+            color: #9C6ADE;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .service-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .service-item-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .cta-banner {
+            background: linear-gradient(135deg, #9C6ADE, #7C5AC2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 0 16px 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .cta-desc {
+            font-size: 14px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background-color: white;
+            color: #9C6ADE;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 25px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .faq-section {
+            margin: 0 16px 20px;
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .faq-question:after {
+            content: "\f107";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: #9C6ADE;
+        }
+        
+        .faq-answer {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .reviews-section {
+            margin: 0 16px 20px;
+        }
+        
+        .review-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            margin-right: 10px;
+            overflow: hidden;
+        }
+        
+        .reviewer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .reviewer-info {
+            flex: 1;
+        }
+        
+        .reviewer-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .review-date {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .review-rating {
+            color: #FFCC00;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .review-content {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 模拟iPhone顶部状态栏 -->
+        <div class="status-bar">
+            <div class="status-bar-left">9:41</div>
+            <div class="status-bar-right">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- 应用内容区域 -->
+        <div class="app-content">
+            <!-- 页面头部 -->
+            <div class="page-header">
+                <a href="../home.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="page-title">代办问诊服务</h1>
+            </div>
+            
+            <!-- 服务简介 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <div class="service-title">专业代办问诊</div>
+                </div>
+                <div class="service-desc">
+                    代办问诊服务由专业医疗陪诊人员为您代为预约医生、咨询专家、整理病历资料，提供全流程的医疗代办服务，帮助您节省时间，获得专业医疗建议。
+                </div>
+                <ul class="benefits-list">
+                    <li class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="benefit-text">无需本人到场，由专业人员代为问诊咨询</div>
+                    </li>
+                    <li class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="benefit-text">获取多位医生的专业诊断意见</div>
+                    </li>
+                    <li class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="benefit-text">节省排队等待时间，提高就医效率</div>
+                    </li>
+                    <li class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="benefit-text">详细记录医生建议，整理诊疗方案</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 服务内容 -->
+            <h2 class="section-title">代办服务内容</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="service-item-title">名医预约代办</div>
+                    <div class="service-item-desc">代为预约知名专家门诊，获取难约专家号源</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-comment-medical"></i>
+                    </div>
+                    <div class="service-item-title">专家咨询</div>
+                    <div class="service-item-desc">根据您的病情，代为咨询相关医学专家</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <div class="service-item-title">病历整理</div>
+                    <div class="service-item-desc">整理病历资料，建立完整健康档案</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-laptop-medical"></i>
+                    </div>
+                    <div class="service-item-title">远程会诊</div>
+                    <div class="service-item-desc">协助组织多学科专家远程会诊</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-hospital-alt"></i>
+                    </div>
+                    <div class="service-item-title">就医规划</div>
+                    <div class="service-item-desc">根据病情制定合理的就医规划方案</div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-item-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="service-item-title">电话咨询</div>
+                    <div class="service-item-desc">代为向医生进行电话咨询并记录</div>
+                </div>
+            </div>
+            
+            <!-- 服务流程 -->
+            <h2 class="section-title">服务流程</h2>
+            <div class="how-it-works">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">提交需求</div>
+                        <div class="step-desc">
+                            在APP上填写您的健康状况、问诊需求和相关病历资料，上传检查报告等医疗文件。
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">服务确认</div>
+                        <div class="step-desc">
+                            客服确认您的需求细节，提供服务方案和报价，双方确认后支付费用。
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">代办执行</div>
+                        <div class="step-desc">
+                            专业陪诊人员根据您的需求，预约医生、代为问诊或咨询，详细记录医生的诊断和建议。
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">结果反馈</div>
+                        <div class="step-desc">
+                            服务完成后，将详细的问诊记录、医生建议、后续治疗方案等整理成报告反馈给您。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 号召性用语 -->
+            <div class="cta-banner">
+                <div class="cta-title">让专业人员为您代办问诊</div>
+                <div class="cta-desc">节省时间，获取专业意见，高效解决健康问题</div>
+                <button class="cta-button">立即预约</button>
+            </div>
+            
+            <!-- 常见问题 -->
+            <h2 class="section-title">常见问题</h2>
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question">代办问诊需要我提供哪些资料？</div>
+                    <div class="faq-answer">
+                        您需要提供个人基本信息、健康问题描述、既往病史、目前用药情况、近期检查报告等相关医疗资料。资料越详细，代办问诊的效果越好。
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">代办问诊后如何获得医生的建议？</div>
+                    <div class="faq-answer">
+                        问诊完成后，我们会整理详细的问诊记录，包括医生的诊断意见、用药建议、后续检查计划等，以书面报告形式通过APP推送给您，必要时会安排视频通话详细解释。
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">代办问诊服务的费用如何计算？</div>
+                    <div class="faq-answer">
+                        费用根据服务类型、医生级别、问诊难度等因素综合计算。基础服务起价200元，专家咨询和远程会诊等高级服务会有相应的费用增加。具体价格会在服务确认环节与您明确沟通。
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 用户评价 -->
+            <h2 class="section-title">用户评价</h2>
+            <div class="reviews-section">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="用户头像">
+                        </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">王女士</div>
+                            <div class="review-date">2023-07-12</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="review-content">
+                        父亲长期高血压，需要找专家咨询用药调整，但我工作忙无法陪同。通过代办问诊服务，成功获取了三甲医院专家的建议，服务人员整理的问诊报告非常详细，父亲的用药方案也得到了优化。非常感谢！
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="用户头像">
+                        </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">李先生</div>
+                            <div class="review-date">2023-06-28</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="review-content">
+                        异地就医很不方便，通过代办问诊服务为妻子咨询了妇科专家，服务人员专业细致，不仅帮我们预约到了知名专家，还整理了完整的治疗建议。节省了我们往返奔波的时间和精力，值得推荐。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <a href="../home.html" class="tab-item active">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="../orders.html" class="tab-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>订单</span>
+            </a>
+            <a href="../community.html" class="tab-item">
+                <i class="fas fa-users"></i>
+                <span>社区</span>
+            </a>
+            <a href="../profile.html" class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 
